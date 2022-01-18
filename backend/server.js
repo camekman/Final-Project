@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import listEndpoints from "express-list-endpoints";
+import { stringify } from "querystring";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/authAPI";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -18,6 +19,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+  },
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
   },
   email: {
     type: String,
@@ -34,7 +39,11 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", UserSchema);
+const RoleSchema = mongoose.Schema({
+  description: String,
+});
 
+const Role = mongoose.model("Role", RoleSchema);
 // Defines the port the app will run on. Defaults to 8080, but can be
 // overridden when starting the server. For example:
 //
@@ -118,6 +127,33 @@ app.post("/signin", async (req, res) => {
   } catch (error) {
     res.status(400).json({ response: error, success: false });
   }
+});
+
+app.post("/role", async (req, res) => {
+  const { description } = req.body;
+  try {
+    const newRole = await new Role({ description }).save();
+    res.status(201).json({ response: newRole, success: true });
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+app.post("/user", async (req, res) => {
+  const { name, role } = req.body;
+  try {
+    const specificRole = await Role.findById(role);
+    const newUser = await new User({ name, role: specificRole }).save();
+    res.status(201).json({ response: newUser, success: true });
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+app.get("/user/userId", async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId).populate("role");
+  res.status(200).json({ response: user, success: true });
 });
 
 // Start the server
