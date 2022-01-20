@@ -144,6 +144,7 @@ app.post("/signin", async (req, res) => {
       res.status(200).json({
         response: {
           userId: user._id,
+          name: user.name,
           username: user.username,
           accessToken: user.accessToken,
         },

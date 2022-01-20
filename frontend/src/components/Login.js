@@ -66,32 +66,31 @@ const Login = () => {
   };
 
   return (
-    <>
-      <Link to="/">Home</Link>
-      <LoginContainer>
+    <LoginContainer>
+      <LoginSection>
         <form onSubmit={onFormSubmit}>
-          <p> Name </p>
+          <p> Name: </p>
           <input
             id="name"
             type="text"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-          <p> Username </p>
+          <p> Username: </p>
           <input
             id="username"
             type="text"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-          <p> Password </p>
+          <p> Password: </p>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <p> Email </p>
+          <p> Email: </p>
           <input
             id="email"
             type="email"
@@ -119,20 +118,31 @@ const Login = () => {
           </ButtonContainer>
           {errorMessage !== null && <p>{error.message}</p>}
         </form>
-      </LoginContainer>
-    </>
+      </LoginSection>
+      <Link to="/">Home</Link>
+    </LoginContainer>
   );
 };
 
 export default Login;
 
 const LoginContainer = styled.div`
-  background-color: rgba(42, 101, 42, 0.783);
+  display: flex;
+  flex-direction: column;
+  background-color: lightskyblue;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  align-items: center;
+`;
+
+const LoginSection = styled.div`
+  background-color: lightcoral;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: fit-content;
-  padding: 20px;
+  padding: 30px;
+  margin: 20px;
   border-radius: 30px;
   border: 1px solid black;
   box-shadow: 5px 5px;
@@ -140,11 +150,11 @@ const LoginContainer = styled.div`
 `;
 
 const RadioButtonContainer = styled.div`
-  background-color: gray;
+  background-color: darkcyan;
   display: flex;
   flex-direction: row;
-  margin-top: 15px;
   padding: 15px;
+  margin-top: 20px;
   border-radius: 10px;
   color: white;
 `;
