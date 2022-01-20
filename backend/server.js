@@ -4,10 +4,20 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import listEndpoints from "express-list-endpoints";
-import { stringify } from "querystring";
+
+import dotenv from "dotenv";
+import cloudinaryFramework from "cloudinary";
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+dotenv.config();
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/authAPI";
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 mongoose.Promise = Promise;
 
 const UserSchema = new mongoose.Schema({
@@ -44,15 +54,18 @@ const RoleSchema = mongoose.Schema({
 });
 
 const Role = mongoose.model("Role", RoleSchema);
-// Defines the port the app will run on. Defaults to 8080, but can be
-// overridden when starting the server. For example:
-//
-//   PORT=9000 npm start
+
+const Wardrobe = mongoose.model("Wardrobe", {
+  name: String,
+  imageUrl: String,
+});
+
 const port = process.env.PORT || 8080;
 const app = express();
 
-// Add middlewares to enable cors and json body parsing
-app.use(cors()); // here we can choose specific domain
+// -------------- MIDDLEWEARES ----------------------------
+
+app.use(cors()); // here we can choose a specific domain
 app.use(express.json());
 
 const authenticateUser = async (req, res, next) => {
@@ -68,7 +81,25 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-// Start defining your routes here
+const cloudinary = cloudinaryFramework.v2;
+cloudinary.config({
+  cloud_name: "final-project-cam-lotta",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "wardrobe",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  },
+});
+const parser = multer({ storage });
+
+//------ROUTES-----------------------------------------------------
+
 app.get("/", (req, res) => {
   res.json(listEndpoints(app));
 });
@@ -156,7 +187,23 @@ app.get("/user/userId", async (req, res) => {
   res.status(200).json({ response: user, success: true });
 });
 
-// Start the server
+// app.post("/wardrobe", parser.single("image"), async (req, res) => {
+//   res.json({ imageUrl: req.file.path, imageId: req.file.filename });
+// });
+
+app.post("/wardrobe", parser.single("image"), async (req, res) => {
+  try {
+    const wardrobe = await new Wardrobe({
+      name: req.body.filename,
+      imageUrl: req.file.path,
+    }).save();
+    res.json(wardrobe);
+  } catch (err) {
+    res.status(400).json({ errors: err.errors });
+  }
+});
+
+// ------------ START SERVER --------------------------------------
 app.listen(port, () => {
   // eslint-disable-next-line
   console.log(`Server running on http://localhost:${port}`);
