@@ -47,7 +47,7 @@ const ProfilePage = () => {
         <p>Name: {name}</p>
         <p>Username: {username}</p>
       </ProfileInfo>
-      <Link to="/wardrobe">My Wardrobe</Link>
+      <Link to="/uploadImage">Upload new image</Link>
       <div>
         <button onClick={handleRestart}>sign out</button>
       </div>
@@ -62,6 +62,7 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   background-color: lightskyblue;
   align-items: center;
+  text-align: center;
   padding-bottom: 20px;
 `;
 

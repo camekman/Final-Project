@@ -20,7 +20,7 @@ const HomePage = () => {
       </ContentContainer>
       <LinkSection>
         <Link to="/login">Login</Link>
-        <Link to="/aboutus">About Us</Link>
+        <Link to="/aboutUs">About Us</Link>
       </LinkSection>
     </HomePageContainer>
   );

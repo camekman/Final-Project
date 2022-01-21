@@ -7,15 +7,17 @@ import Header from "./components/Header";
 import HomePage from "./components/HomePage";
 import ProfilePage from "./components/ProfilePage";
 import Login from "./components/Login";
-import Wardrobe from "./components/Wardrobe";
+import UploadImage from "./components/UploadImage";
 import NotFound from "./components/NotFound";
 import AboutUs from "./components/AboutUs";
 import Footer from "./components/Footer";
 
 import user from "./reducers/user";
+import wardrobe from "./reducers/wardrobe";
 
 const reducer = combineReducers({
   user: user.reducer,
+  wardrobe: wardrobe.reducer,
 });
 
 const store = configureStore({ reducer });
@@ -30,8 +32,8 @@ export const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/wardrobe" element={<Wardrobe />} />
-            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/uploadImage" element={<UploadImage />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

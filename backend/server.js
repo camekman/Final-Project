@@ -55,7 +55,7 @@ const RoleSchema = mongoose.Schema({
 
 const Role = mongoose.model("Role", RoleSchema);
 
-const Wardrobe = mongoose.model("Wardrobe", {
+const Image = mongoose.model("Image", {
   name: String,
   imageUrl: String,
 });
@@ -188,17 +188,20 @@ app.get("/user/userId", async (req, res) => {
   res.status(200).json({ response: user, success: true });
 });
 
-// app.post("/wardrobe", parser.single("image"), async (req, res) => {
-//   res.json({ imageUrl: req.file.path, imageId: req.file.filename });
-// });
+app.post("/upload", parser.single("image"), async (req, res) => {
+  res.json({
+    imageUrl: req.file.path,
+    imageId: req.file.filename,
+  });
+});
 
-app.post("/wardrobe", parser.single("image"), async (req, res) => {
+app.post("/upload", parser.single("image"), async (req, res) => {
   try {
-    const wardrobe = await new Wardrobe({
+    const image = await new Image({
       name: req.body.filename,
       imageUrl: req.file.path,
     }).save();
-    res.json(wardrobe);
+    res.json(image);
   } catch (err) {
     res.status(400).json({ errors: err.errors });
   }
