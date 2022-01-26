@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
 
-const Login = () => {
+const Signup = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -69,15 +68,22 @@ const Login = () => {
     <LoginContainer>
       <LoginSection>
         <RadioButtonContainer>
-          <label htmlFor="signin">Signin</label>
+          <label htmlFor="signup">Signup</label>
           <input
-            id="signin"
+            id="signup"
             type="radio"
-            checked={mode === "signin"}
-            onChange={() => setMode("signin")}
+            checked={mode === "signup"}
+            onChange={() => setMode("signup")}
           />
         </RadioButtonContainer>
         <form onSubmit={onFormSubmit}>
+          <p> Name: </p>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
           <p> Username: </p>
           <input
             id="username"
@@ -92,6 +98,13 @@ const Login = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <p> Email: </p>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
           <ButtonContainer>
             <SubmitButton type="submit">Continue</SubmitButton>
@@ -104,7 +117,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
 
 const LoginContainer = styled.div`
   display: flex;

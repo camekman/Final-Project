@@ -43,6 +43,10 @@ const ProfilePage = () => {
     <ProfileContainer>
       <h1>Welcome to your Profile!</h1>
       <ProfilePicture>profile picture</ProfilePicture>
+      <Link to="/MyWardrobe">MyWardrobe</Link>
+      <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
+      <Link to="/Moodboard">Moodboard</Link>
+      <Link to="/Inspiration">Inspiration</Link>
       <ProfileInfo>
         <p>Name: {name}</p>
         <p>Username: {username}</p>

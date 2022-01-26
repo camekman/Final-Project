@@ -1,10 +1,12 @@
 import React from "react";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = () => {
   return (
     <HeaderContainer>
       <p>hamburger menu</p>
+
       <h4>This is our header</h4>
       <p>go to my profile</p>
     </HeaderContainer>
