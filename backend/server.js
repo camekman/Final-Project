@@ -188,14 +188,32 @@ app.get("/user/userId", async (req, res) => {
   res.status(200).json({ response: user, success: true });
 });
 
+// app.post("/upload", parser.single("image"), async (req, res) => {
+//   res.json({
+//     imageUrl: req.file.path,
+//     imageId: req.file.filename,
+//   });
+// });
+
 app.post("/upload", parser.single("image"), async (req, res) => {
+  try {
+    const image = await new Image({
+      name: req.body.filename,
+      imageUrl: req.file.path,
+    }).save();
+    res.json(image);
+  } catch (err) {
+    res.status(400).json({ errors: err.errors });
+  }
+});
+app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
   res.json({
     imageUrl: req.file.path,
     imageId: req.file.filename,
   });
 });
 
-app.post("/upload", parser.single("image"), async (req, res) => {
+app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
   try {
     const image = await new Image({
       name: req.body.filename,
