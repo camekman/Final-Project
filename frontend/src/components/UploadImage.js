@@ -1,13 +1,14 @@
 import React, { useState, useRef } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-
-const UPLOAD_URL = "http://localhost:8080/upload";
 
 const UploadImage = () => {
   const fileInput = useRef();
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const userId = useSelector((store) => store.user.userId);
+
+  const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
 
   const handleFormSubmit = (event) => {
     event.preventDefault();

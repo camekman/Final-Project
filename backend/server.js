@@ -30,10 +30,12 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  role: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Role",
-  },
+  galleries: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Image",
+    },
+  ],
   email: {
     type: String,
     required: true,
@@ -49,11 +51,11 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", UserSchema);
-const RoleSchema = mongoose.Schema({
-  description: String,
-});
+// const GalleriesSchema = mongoose.Schema({
+//   description: String,
+// });
 
-const Role = mongoose.model("Role", RoleSchema);
+// const Gallery = mongoose.model("Galleries", GalleriesSchema);
 
 const Image = mongoose.model("Image", {
   name: String,
@@ -75,6 +77,13 @@ const authenticateUser = async (req, res, next) => {
     const user = await user.findOne({ accessToken });
     if (user) {
       next();
+    } else {
+      res.status(401).json({
+        response: {
+          message: "Please, log in",
+        },
+        success: false,
+      });
     }
   } catch (error) {
     res.status(400).json({ response: error, success: false });
@@ -102,6 +111,43 @@ const parser = multer({ storage });
 
 app.get("/", (req, res) => {
   res.json(listEndpoints(app));
+});
+
+// app.get("/user/userId", async (req, res) => {
+//   const { userId } = req.params;
+//   const user = await User.findById(userId).populate("Galleries");
+//   res.status(200).json({ response: user, success: true });
+// });
+
+// doesent work
+app.get("/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const gueriedUser = await User.findById(userId).populate("galleries");
+    if (queriedUser) {
+      res.status(200).json({ response: queriedUser, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+app.get("/user/:userId/images", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const gueriedUser = await User.findById(userId).populate("galleries");
+    if (queriedUser) {
+      res.status(200).json({ response: queriedUser.galleries, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
 });
 
 app.post("/signup", async (req, res) => {
@@ -161,51 +207,106 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.post("/role", async (req, res) => {
+app.post("/gallery", async (req, res) => {
   const { description } = req.body;
   try {
-    const newRole = await new Role({ description }).save();
-    res.status(201).json({ response: newRole, success: true });
+    const newGallery = await new Gallery({ description }).save();
+    res.status(201).json({ response: newGallery, success: true });
   } catch (error) {
     res.status(400).json({ response: error, success: false });
   }
 });
 
-app.post("/user", async (req, res) => {
-  const { name, role } = req.body;
-  try {
-    const specificRole = await Role.findById(role);
-    const newUser = await new User({ name, role: specificRole }).save();
-    res.status(201).json({ response: newUser, success: true });
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
-  }
-});
+// seams like somethings not working here
+// app.post("/user", async (req, res) => {
+//   const { name, username, email, password } = req.body;
 
-app.get("/user/userId", async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findById(userId).populate("role");
-  res.status(200).json({ response: user, success: true });
-});
+//   try {
+//     const newUser = await new User({
+//       name,
+//       username,
+//       email,
+//       password: bcrypt.hashSync(password),
+//     }).save();
 
-// app.post("/upload", parser.single("image"), async (req, res) => {
-//   res.json({
-//     imageUrl: req.file.path,
-//     imageId: req.file.filename,
-//   });
+//     res.status(201).json({ response: newUser, success: true });
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
 // });
 
-app.post("/upload", parser.single("image"), async (req, res) => {
+// Did not work ----------------------------------------- :(
+// code along v.20
+// app.post("/user", async (req, res) => {
+//   try {
+//     const { name, email, password } = req.body;
+//     const user = new User({ name, email, password: bcrypt.hashSync(password) });
+//     user.save();
+//     res.status(201).json({ id: user._id, accessToken: user.accessToken });
+//   } catch (err) {
+//     res
+//       .status(400)
+//       .json({ message: "Could not create user", errors: err.errors });
+//   }
+// });
+
+//v1 - path params
+// app.patch("/user/:userId/gallery/:galleryId", async (req, res) => {
+//   const { userId, galleryId } = req.params;
+
+//   try {
+//     const queriedUser = await User.findById(userId);
+
+//     if (queriedUser) {
+//       const queriedGallery = await Gallery.findById(galleryId);
+
+//       if (queriedGallery) {
+//         const updatedUser = await User.findByIdAndUpdate(
+//           userId,
+//           {
+//             $push: {
+//               galleries: queriedGallery,
+//             },
+//           },
+//           { new: true }
+//         );
+
+//         res.status(200).json({ response: updatedUser, success: true });
+//       } else {
+//         res.status(404).json({ response: "Image not found", success: false });
+//       }
+//     } else {
+//       res.status(404).json({ response: "User not found", success: false });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
+// });
+
+app.post("/upload/:userId", parser.single("image"), async (req, res) => {
+  const { userId } = req.params;
   try {
     const image = await new Image({
       name: req.body.filename,
       imageUrl: req.file.path,
     }).save();
-    res.json(image);
+
+    const user = await User.findById(userId);
+    if (user) {
+      const updatedUser = await User.findByIdAndUpdate(userId, {
+        $push: {
+          galleries: image,
+        },
+      });
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
   } catch (err) {
     res.status(400).json({ errors: err.errors });
   }
 });
+
 app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
   res.json({
     imageUrl: req.file.path,

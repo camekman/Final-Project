@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import user from "../reducers/user";
 import { API_URL } from "../utils/urls";
+const UPLOAD_URL = "http://localhost:8080/upload";
 
 const ProfilePage = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
+
+  const fileInput = useRef();
+  const [imageName, setImageName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,10 +44,31 @@ const ProfilePage = () => {
     dispatch(user.actions.restart());
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("image", fileInput.current.files[0]);
+    formData.append("name", name);
+
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+
+    fetch(UPLOAD_URL, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setImageUrl(data.imageUrl);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <ProfileContainer>
       <h1>Welcome to your Profile!</h1>
-      <ProfilePicture>profile picture</ProfilePicture>
+      <ProfilePicture>
+        <img src={imageUrl} />
+      </ProfilePicture>
       <Link to="/MyWardrobe">MyWardrobe</Link>
       <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
       <Link to="/Moodboard">Moodboard</Link>
