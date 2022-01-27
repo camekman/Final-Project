@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// galleries: [
+//   {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "Image",
+//   },
+// ],
+
 const initialState = {
   userId: null,
   name: null,
   username: null,
+  galleries: [{}],
   email: null,
   accessToken: null,
   error: null,
@@ -24,6 +32,9 @@ const user = createSlice({
     },
     setEmail: (store, action) => {
       store.email = action.payload;
+    },
+    setGalleries: (store, action) => {
+      store.galleries = action.payload;
     },
     setAccessToken: (store, action) => {
       store.accessToken = action.payload;

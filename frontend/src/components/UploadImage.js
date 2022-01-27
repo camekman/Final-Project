@@ -6,8 +6,10 @@ const UploadImage = () => {
   const fileInput = useRef();
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const userId = useSelector((store) => store.user.userId);
+  const [galleries, setGalleries] = useState("");
 
+  // const galleries = useSelector((store) => store.user.galleries);
+  const userId = useSelector((store) => store.user.userId);
   const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
 
   const handleFormSubmit = (event) => {
@@ -25,8 +27,9 @@ const UploadImage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setGalleries(data.galleries);
         setImageUrl(data.imageUrl);
-      })
+      }, [])
       .catch((err) => console.log(err));
   };
 
@@ -55,7 +58,18 @@ const UploadImage = () => {
         <div>
           <h1>Uploaded image will be displayed here</h1>
         </div>
-        <img src={imageUrl} />
+        <img src={imageUrl.galleries} />
+        <img src={galleries} />
+        {/* <div>
+          {galleries.map((item) => (
+            <div key={userId}>
+              <img
+                src={`http://localhost:8080//user/${item.galleries}`}
+                alt={name}
+              />
+            </div>
+          ))}
+        </div> */}
       </UploadContainer>
     </>
   );

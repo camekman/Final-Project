@@ -51,11 +51,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", UserSchema);
-// const GalleriesSchema = mongoose.Schema({
-//   description: String,
-// });
-
-// const Gallery = mongoose.model("Galleries", GalleriesSchema);
 
 const Image = mongoose.model("Image", {
   name: String,
@@ -113,13 +108,6 @@ app.get("/", (req, res) => {
   res.json(listEndpoints(app));
 });
 
-// app.get("/user/userId", async (req, res) => {
-//   const { userId } = req.params;
-//   const user = await User.findById(userId).populate("Galleries");
-//   res.status(200).json({ response: user, success: true });
-// });
-
-// doesent work
 app.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
 
@@ -216,72 +204,6 @@ app.post("/gallery", async (req, res) => {
     res.status(400).json({ response: error, success: false });
   }
 });
-
-// seams like somethings not working here
-// app.post("/user", async (req, res) => {
-//   const { name, username, email, password } = req.body;
-
-//   try {
-//     const newUser = await new User({
-//       name,
-//       username,
-//       email,
-//       password: bcrypt.hashSync(password),
-//     }).save();
-
-//     res.status(201).json({ response: newUser, success: true });
-//   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
-//   }
-// });
-
-// Did not work ----------------------------------------- :(
-// code along v.20
-// app.post("/user", async (req, res) => {
-//   try {
-//     const { name, email, password } = req.body;
-//     const user = new User({ name, email, password: bcrypt.hashSync(password) });
-//     user.save();
-//     res.status(201).json({ id: user._id, accessToken: user.accessToken });
-//   } catch (err) {
-//     res
-//       .status(400)
-//       .json({ message: "Could not create user", errors: err.errors });
-//   }
-// });
-
-//v1 - path params
-// app.patch("/user/:userId/gallery/:galleryId", async (req, res) => {
-//   const { userId, galleryId } = req.params;
-
-//   try {
-//     const queriedUser = await User.findById(userId);
-
-//     if (queriedUser) {
-//       const queriedGallery = await Gallery.findById(galleryId);
-
-//       if (queriedGallery) {
-//         const updatedUser = await User.findByIdAndUpdate(
-//           userId,
-//           {
-//             $push: {
-//               galleries: queriedGallery,
-//             },
-//           },
-//           { new: true }
-//         );
-
-//         res.status(200).json({ response: updatedUser, success: true });
-//       } else {
-//         res.status(404).json({ response: "Image not found", success: false });
-//       }
-//     } else {
-//       res.status(404).json({ response: "User not found", success: false });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
-//   }
-// });
 
 app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   const { userId } = req.params;
