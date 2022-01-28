@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   imageId: null,
-  name: null,
+  imageName: null,
   imageUrl: null,
   error: null,
 };
@@ -14,8 +14,8 @@ const wardrobe = createSlice({
     setImageId: (store, action) => {
       store.imageId = action.payload;
     },
-    setName: (store, action) => {
-      store.name = action.payload;
+    setImageName: (store, action) => {
+      store.imageName = action.payload;
     },
     setImageUrl: (store, action) => {
       store.imageUrl = action.payload;

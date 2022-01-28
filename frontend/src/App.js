@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+
 // import Header from "./components/Header";
 import HomePage from "./components/HomePage";
 import ProfilePage from "./components/ProfilePage";

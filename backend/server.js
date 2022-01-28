@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model("User", UserSchema);
 
 const Image = mongoose.model("Image", {
-  name: String,
+  imageName: String,
   imageUrl: String,
 });
 
@@ -128,6 +128,7 @@ app.get("/user/:userId/images", async (req, res) => {
 
   try {
     const gueriedUser = await User.findById(userId).populate("galleries");
+    console.log(gueriedUser);
     if (queriedUser) {
       res.status(200).json({ response: queriedUser.galleries, success: true });
     } else {
@@ -137,6 +138,8 @@ app.get("/user/:userId/images", async (req, res) => {
     res.status(400).json({ response: error, success: false });
   }
 });
+
+// user not found
 
 app.post("/signup", async (req, res) => {
   const { name, username, password, email } = req.body;
