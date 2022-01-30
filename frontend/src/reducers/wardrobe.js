@@ -11,6 +11,9 @@ const wardrobe = createSlice({
     setImages: (store, action) => {
       store.images = action.payload;
     },
+    addImage: (store, action) => {
+      store.images.push(action.payload);
+    },
   },
 });
 

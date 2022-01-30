@@ -218,12 +218,12 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
 
     const user = await User.findById(userId);
     if (user) {
-      const updatedUser = await User.findByIdAndUpdate(userId, {
+      await User.findByIdAndUpdate(userId, {
         $push: {
           galleries: image,
         },
       });
-      res.json(updatedUser);
+      res.status(200).json({ response: image, success: true });
     } else {
       res.status(404).json({ response: "User not found", success: false });
     }
