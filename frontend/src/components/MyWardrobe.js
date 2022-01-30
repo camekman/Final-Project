@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
-// import user from "../reducers/user";
+
+import wardrobe from "../reducers/wardrobe";
 
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
+  const userId = useSelector((store) => store.user.userId);
+  const images = useSelector((store) => store.wardrobe.images);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +18,7 @@ const MyWardrobe = () => {
       navigate("/login");
     }
   }, [accessToken, navigate]);
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -22,12 +27,18 @@ const MyWardrobe = () => {
       },
     };
 
-    fetch(API_URL, options)
+    fetch(API_URL(`user/${userId}/images`), options)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        if (json.success) {
+          const images = json.response.map(({ _id: id, imageUrl }) => ({
+            id,
+            imageUrl,
+          }));
+          dispatch(wardrobe.actions.setImages(images));
+        }
       });
-  }, [accessToken]);
+  }, [accessToken, userId, dispatch]);
 
   return (
     <>
@@ -38,6 +49,11 @@ const MyWardrobe = () => {
         <Link to="/Moodboard">Moodboard</Link>
         <Link to="/Inspiration">Inspiration</Link>
         <Link to="/profile">ProfilePage</Link>
+      </div>
+      <div>
+        {images.map(({ id, imageUrl }) => (
+          <img src={imageUrl} alt={id} key={id} />
+        ))}
       </div>
       <div>
         {" "}

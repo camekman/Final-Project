@@ -127,14 +127,14 @@ app.get("/user/:userId/images", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const gueriedUser = await User.findById(userId).populate("galleries");
-    console.log(gueriedUser);
+    const queriedUser = await User.findById(userId).populate("galleries");
     if (queriedUser) {
       res.status(200).json({ response: queriedUser.galleries, success: true });
     } else {
       res.status(404).json({ response: "User not found", success: false });
     }
   } catch (error) {
+    console.error(error);
     res.status(400).json({ response: error, success: false });
   }
 });
