@@ -2,14 +2,16 @@ import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import wardrobe from "../reducers/wardrobe";
+import image from "../reducers/image";
 
 const UploadImage = () => {
   const fileInput = useRef();
   const [imageName, setImageName] = useState("");
   const [uploadComplete, setUploadComplete] = useState(false);
-
-  const images = useSelector((store) => store.wardrobe.images);
+  const [category, setCategory] = useState("");
+  console.log(category);
+  const images = useSelector((store) => store.image.images);
+  // const category = useSelector((store) => store.image.category);
 
   const userId = useSelector((store) => store.user.userId);
   const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
@@ -21,6 +23,7 @@ const UploadImage = () => {
     const formData = new FormData();
     formData.append("image", fileInput.current.files[0]);
     formData.append("imageName", imageName);
+    formData.append("category", category);
 
     const options = {
       method: "POST",
@@ -31,12 +34,17 @@ const UploadImage = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          dispatch(wardrobe.actions.addImage(json.response));
+          dispatch(image.actions.addImage(json.response));
+
           setUploadComplete(true);
         } else {
           // TODO
         }
       });
+  };
+
+  const onCategoryChange = (event) => {
+    setCategory(event.target.value);
   };
 
   return (
@@ -53,15 +61,22 @@ const UploadImage = () => {
             />
           </UploadSection>
 
-          <label>
+          {/* <label>
             Type of garment:
             <input
               type="text"
               value={imageName}
               onChange={(e) => setImageName(e.target.value)}
             />
-          </label>
-
+          </label> */}
+          <select value={category} onChange={onCategoryChange}>
+            <option value="dresses">Dresses</option>
+            <option value="tops">Tops</option>
+            <option value="Jackets/Coats">Jackets/Coats</option>
+            <option value="sweatshirts">Sweatshirts</option>
+            <option value="pants">Pants</option>
+          </select>
+          <p>{category}</p>
           <button type="submit">Continue</button>
         </StyledForm>
       </UploadContainer>

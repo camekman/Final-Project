@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 
-import wardrobe from "../reducers/wardrobe";
+import image from "../reducers/image";
 
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
-  const images = useSelector((store) => store.wardrobe.images);
+  const images = useSelector((store) => store.image.images);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const MyWardrobe = () => {
             id,
             imageUrl,
           }));
-          dispatch(wardrobe.actions.setImages(images));
+          dispatch(image.actions.setImages(images));
         }
       });
   }, [accessToken, userId, dispatch]);

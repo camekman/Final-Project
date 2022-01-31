@@ -4,8 +4,8 @@ const initialState = {
   images: [],
 };
 
-const wardrobe = createSlice({
-  name: "wardrobe",
+const image = createSlice({
+  name: "image",
   initialState,
   reducers: {
     setImages: (store, action) => {
@@ -14,7 +14,10 @@ const wardrobe = createSlice({
     addImage: (store, action) => {
       store.images.push(action.payload);
     },
+    setCategory: (store, action) => {
+      store.images.category(action.payload);
+    },
   },
 });
 
-export default wardrobe;
+export default image;

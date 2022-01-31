@@ -50,12 +50,24 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+const ImageSchema = new mongoose.Schema({
+  imageName: {
+    type: String,
+    // required: true,
+  },
+  imageUrl: {
+    type: String,
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ["dresses", "tops", "Jackets/Coats", "sweatshirts", "pants"],
+  },
+});
+
 const User = mongoose.model("User", UserSchema);
 
-const Image = mongoose.model("Image", {
-  imageName: String,
-  imageUrl: String,
-});
+const Image = mongoose.model("Image", ImageSchema);
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -210,10 +222,14 @@ app.post("/gallery", async (req, res) => {
 
 app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   const { userId } = req.params;
+  console.log(req.body);
   try {
     const image = await new Image({
-      name: req.body.filename,
+      imageName: req.body.filename,
       imageUrl: req.file.path,
+      //category needs to be saved here?
+
+      category: req.body.category,
     }).save();
 
     const user = await User.findById(userId);
@@ -223,7 +239,10 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
           galleries: image,
         },
       });
-      res.status(200).json({ response: image, success: true });
+      res.status(200).json({
+        response: image,
+        success: true,
+      });
     } else {
       res.status(404).json({ response: "User not found", success: false });
     }
@@ -242,7 +261,7 @@ app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
 app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
   try {
     const image = await new Image({
-      name: req.body.filename,
+      imagName: req.body.filename,
       imageUrl: req.file.path,
     }).save();
     res.json(image);

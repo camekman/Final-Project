@@ -18,11 +18,11 @@ import MyFleeMarketWardrobe from "./components/MyFleeMarketWardorbe";
 import Moodboard from "./components/Moodboard";
 
 import user from "./reducers/user";
-import wardrobe from "./reducers/wardrobe";
+import image from "./reducers/image";
 
 const reducer = combineReducers({
   user: user.reducer,
-  wardrobe: wardrobe.reducer,
+  image: image.reducer,
 });
 
 const store = configureStore({ reducer });
