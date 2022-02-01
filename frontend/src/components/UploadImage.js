@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import image from "../reducers/image";
 
 const UploadImage = () => {
   const fileInput = useRef();
-  const [imageName, setImageName] = useState("");
+  // const [imageName, setImageName] = useState("");
   const [uploadComplete, setUploadComplete] = useState(false);
   const [category, setCategory] = useState("");
   console.log(category);
@@ -22,7 +23,7 @@ const UploadImage = () => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("image", fileInput.current.files[0]);
-    formData.append("imageName", imageName);
+    // formData.append("imageName", imageName);
     formData.append("category", category);
 
     const options = {
@@ -59,6 +60,7 @@ const UploadImage = () => {
               ref={fileInput}
               // onChange={(e) => setGalleries(e.target.ref)}
             />
+            <Link to="/MyWardrobe">MyWardrobe</Link>
           </UploadSection>
 
           {/* <label>

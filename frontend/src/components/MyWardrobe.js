@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
@@ -9,9 +9,20 @@ const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
-
+  const [category, setCategory] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  let selectedCategory = useSelector((store) =>
+    store.image.images.filter((item) => item.category)
+  );
+
+  const categoryClothes = selectedCategory.filter(
+    (item) => item.category === category
+  );
+  console.log(selectedCategory);
+  console.log(categoryClothes);
+  console.log(category);
 
   useEffect(() => {
     if (!accessToken) {
@@ -31,14 +42,28 @@ const MyWardrobe = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          const images = json.response.map(({ _id: id, imageUrl }) => ({
-            id,
-            imageUrl,
-          }));
+          const images = json.response.map(
+            ({ _id: id, imageUrl, category }) => ({
+              id,
+              imageUrl,
+              category,
+            })
+          );
           dispatch(image.actions.setImages(images));
+          dispatch(image.actions.setCategory(category));
         }
       });
-  }, [accessToken, userId, dispatch]);
+  }, [accessToken, userId, category, dispatch]);
+  const buttonCategory = [
+    "dresses",
+    "tops",
+    "Jackets/Coats",
+    "sweatshirts",
+    "pants",
+  ];
+  const onCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   return (
     <>
@@ -51,12 +76,25 @@ const MyWardrobe = () => {
         <Link to="/profile">ProfilePage</Link>
       </div>
       <div>
+        {buttonCategory.map((category) => (
+          <button key={category} value={category} onClick={onCategoryChange}>
+            {category}
+          </button>
+        ))}
+      </div>
+
+      {/* kan vi koppla denna till "show all" */}
+      {/* <div>
         {images.map(({ id, imageUrl }) => (
           <img src={imageUrl} alt={id} key={id} />
         ))}
+      </div> */}
+      <div>
+        {categoryClothes.map(({ id, category, imageUrl }) => (
+          <img src={imageUrl} alt={category} key={id} />
+        ))}
       </div>
       <div>
-        {" "}
         <Link to="/uploadImage">Upload new image</Link>
       </div>
     </>
