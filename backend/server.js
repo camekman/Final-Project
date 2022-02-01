@@ -223,6 +223,7 @@ app.post("/gallery", async (req, res) => {
 app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   const { userId } = req.params;
   console.log(req.body);
+  console.log(req.file);
   try {
     const image = await new Image({
       imageName: req.body.filename,
