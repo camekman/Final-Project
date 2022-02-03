@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { API_URL } from "../utils/urls";
+import { DragDropContext } from "react-beautiful-dnd";
 
+import { API_URL } from "../utils/urls";
 import image from "../reducers/image";
 
 const Moodboard = () => {
@@ -11,36 +12,36 @@ const Moodboard = () => {
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/login");
-    }
-  }, [accessToken, navigate]);
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     navigate("/login");
+  //   }
+  // }, [accessToken, navigate]);
 
   // fetching uploaded images
 
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        Authorization: accessToken,
-      },
-    };
-    fetch(API_URL(`user/${userId}/images`), options)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success) {
-          const images = json.response.map(({ _id: id, imageUrl }) => ({
-            id,
-            imageUrl,
-          }));
-          dispatch(image.actions.setImages(images));
-        }
-      });
-  }, [accessToken, userId, dispatch]);
+  // useEffect(() => {
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: accessToken,
+  //     },
+  //   };
+  //   fetch(API_URL(`user/${userId}/images`), options)
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       if (json.success) {
+  //         const images = json.response.map(({ _id: id, imageUrl }) => ({
+  //           id,
+  //           imageUrl,
+  //         }));
+  //         dispatch(image.actions.setImages(images));
+  //       }
+  //     });
+  // }, [accessToken, userId, dispatch]);
 
   return (
     <Container>

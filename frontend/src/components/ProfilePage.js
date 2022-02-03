@@ -8,6 +8,8 @@ import image from "../reducers/image";
 import { API_URL } from "../utils/urls";
 
 const ProfilePage = () => {
+  // const [mode, setMode] = useState("");
+
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
@@ -35,7 +37,7 @@ const ProfilePage = () => {
       },
     };
 
-    fetch(API_URL, options)
+    fetch(API_URL(`user/${userId}`), options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
