@@ -1,20 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  images: [],
-};
+// const initialState = {
+//   images: [],
+// };
 
-const imageProfile = createSlice({
-  name: "imageProfile",
-  initialState,
-  reducers: {
-    setImages: (store, action) => {
-      store.images = action.payload;
-    },
-    addImage: (store, action) => {
-      store.images.push(action.payload);
-    },
-  },
-});
+// const imageProfile = createSlice({
+//   name: "imageProfile",
+//   initialState,
+//   reducers: {
+//     setImages: (store, action) => {
+//       store.images = action.payload;
+//     },
+//     addImage: (store, action) => {
+//       store.images.push(action.payload);
+//     },
+//   },
+// });
 
-export default imageProfile;
+// export default imageProfile;

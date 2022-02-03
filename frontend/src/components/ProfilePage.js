@@ -12,14 +12,10 @@ const ProfilePage = () => {
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
 
-  // const [uploadComplete, setUploadComplete] = useState(false);
   const images = useSelector((store) => store.image.images);
   const fileInput = useRef();
-  // const [imageName, setImageName] = useState("");
-  // const [profileUrl, setProfileUrl] = useState("");
-  // const [profileImage, setProfileImage] = useState("");
-
   const userId = useSelector((store) => store.user.userId);
+
   const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
 
   const dispatch = useDispatch();
@@ -69,7 +65,6 @@ const ProfilePage = () => {
         console.log(json);
         if (json.success) {
           dispatch(image.actions.setImages(json.response));
-          // setUploadComplete(true);
         } else {
         }
       })
@@ -81,13 +76,8 @@ const ProfilePage = () => {
       <h1>Welcome to your Profile!</h1>
 
       <form onSubmit={handleFormSubmit}>
-        <input
-          type="file"
-          ref={fileInput}
-          // onChange={(e) => setGalleries(e.target.ref)}
-        />
+        <input type="file" ref={fileInput} />
         <ProfilePicture>
-          {/* <img scr={imageUrl} alt="" /> */}
           {<img src={images.profileUrl} alt="Upload" />}
 
           <button type="submit">Continue</button>
@@ -130,12 +120,6 @@ const ProfilePicture = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-// const ProfilePictureImage = styled.image`
-//   border-radius: 50%;
-//   width: 100px;
-//   height: 100px;
-// `;
 
 const ProfileInfo = styled.div`
   display: flex;

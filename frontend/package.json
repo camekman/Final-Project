@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "^1.7.1",
+    "@reduxjs/toolkit": "^1.7.2",
     "@types/react-router-dom": "^5.3.3",
     "cra-template-pwa": "1.0.3",
     "react": "^17.0.2",

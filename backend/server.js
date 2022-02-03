@@ -66,7 +66,7 @@ const ImageSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    // required: true,
+    required: true,
     enum: ["dresses", "tops", "Jackets/Coats", "sweatshirts", "pants"],
   },
   profileUrl: {

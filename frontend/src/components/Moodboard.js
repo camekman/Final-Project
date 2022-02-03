@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import styled from "styled-components";
 import { API_URL } from "../utils/urls";
-// import user from "../reducers/user";
+
+import image from "../reducers/image";
 
 const Moodboard = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
+  const userId = useSelector((store) => store.user.userId);
+  const images = useSelector((store) => store.image.images);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +19,9 @@ const Moodboard = () => {
       navigate("/login");
     }
   }, [accessToken, navigate]);
+
+  // fetching uploaded images
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -21,18 +29,23 @@ const Moodboard = () => {
         Authorization: accessToken,
       },
     };
-
-    fetch(API_URL, options)
+    fetch(API_URL(`user/${userId}/images`), options)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        if (json.success) {
+          const images = json.response.map(({ _id: id, imageUrl }) => ({
+            id,
+            imageUrl,
+          }));
+          dispatch(image.actions.setImages(images));
+        }
       });
-  }, [accessToken]);
+  }, [accessToken, userId, dispatch]);
 
   return (
-    <>
+    <Container>
+      <h1>Create your perfect outfit combinations </h1>
       <div>
-        <p>Create your perfect outfit combinations </p>
         <Link to="/MyWardrobe">MyWardrobe</Link>
         <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
         <Link to="/Moodboard">Moodboard</Link>
@@ -40,11 +53,36 @@ const Moodboard = () => {
         <Link to="/profile">ProfilePage</Link>
       </div>
       <div>
-        {" "}
         <Link to="/uploadImage">Upload new image</Link>
       </div>
-    </>
+      <div>
+        <MoodboardContainer>
+          {images.map(({ id, imageUrl }) => (
+            <img src={imageUrl} alt={id} key={id} />
+          ))}
+        </MoodboardContainer>
+      </div>
+    </Container>
   );
 };
 
 export default Moodboard;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+`;
+
+const MoodboardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 10px;
+  border: 3px solid black;
+
+  background-color: lightgray;
+`;

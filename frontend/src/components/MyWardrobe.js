@@ -8,8 +8,9 @@ import image from "../reducers/image";
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
-  // const images = useSelector((store) => store.image.images);
+
   const [category, setCategory] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
