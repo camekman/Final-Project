@@ -4,17 +4,23 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import user from "../reducers/user";
+import image from "../reducers/image";
 import { API_URL } from "../utils/urls";
-const UPLOAD_URL = "http://localhost:8080/upload";
 
 const ProfilePage = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
 
+  // const [uploadComplete, setUploadComplete] = useState(false);
+  const images = useSelector((store) => store.image.images);
   const fileInput = useRef();
-  const [imageName, setImageName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  // const [imageName, setImageName] = useState("");
+  // const [profileUrl, setProfileUrl] = useState("");
+  // const [profileImage, setProfileImage] = useState("");
+
+  const userId = useSelector((store) => store.user.userId);
+  const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +50,8 @@ const ProfilePage = () => {
     dispatch(user.actions.restart());
   };
 
+  //fetching the profile image
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -57,22 +65,39 @@ const ProfilePage = () => {
 
     fetch(UPLOAD_URL, options)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setImageUrl(data.imageUrl);
+      .then((json) => {
+        console.log(json);
+        if (json.success) {
+          dispatch(image.actions.setImages(json.response));
+          // setUploadComplete(true);
+        } else {
+        }
       })
       .catch((err) => console.log(err));
   };
+
   return (
     <ProfileContainer>
       <h1>Welcome to your Profile!</h1>
-      <ProfilePicture>
-        <img src={imageUrl} />
-      </ProfilePicture>
+
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type="file"
+          ref={fileInput}
+          // onChange={(e) => setGalleries(e.target.ref)}
+        />
+        <ProfilePicture>
+          {/* <img scr={imageUrl} alt="" /> */}
+          {<img src={images.profileUrl} alt="Upload" />}
+
+          <button type="submit">Continue</button>
+        </ProfilePicture>
+      </form>
       <Link to="/MyWardrobe">MyWardrobe</Link>
       <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
       <Link to="/Moodboard">Moodboard</Link>
       <Link to="/Inspiration">Inspiration</Link>
+
       <ProfileInfo>
         <p>Name: {name}</p>
         <p>Username: {username}</p>
@@ -105,6 +130,12 @@ const ProfilePicture = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+// const ProfilePictureImage = styled.image`
+//   border-radius: 50%;
+//   width: 100px;
+//   height: 100px;
+// `;
 
 const ProfileInfo = styled.div`
   display: flex;

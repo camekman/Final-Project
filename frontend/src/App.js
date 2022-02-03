@@ -19,10 +19,12 @@ import Moodboard from "./components/Moodboard";
 
 import user from "./reducers/user";
 import image from "./reducers/image";
+import imageProfile from "./reducers/imageProfile";
 
 const reducer = combineReducers({
   user: user.reducer,
   image: image.reducer,
+  imageProfile: imageProfile.reducer,
 });
 
 const store = configureStore({ reducer });
@@ -47,6 +49,7 @@ export const App = () => {
             <Route path="/Signup" element={<SignUp />} />
             <Route path="/uploadImage" element={<UploadImage />} />
             <Route path="/aboutUs" element={<AboutUs />} />
+
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

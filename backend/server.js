@@ -36,6 +36,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Image",
     },
   ],
+  profileImage: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Image",
+    },
+  ],
   email: {
     type: String,
     required: true,
@@ -60,14 +66,29 @@ const ImageSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
+    // required: true,
     enum: ["dresses", "tops", "Jackets/Coats", "sweatshirts", "pants"],
   },
+  profileUrl: {
+    type: String,
+  },
 });
+
+// const ProfileImageSchema = new mongoose.Schema({
+//   imageName: {
+//     type: String,
+//     // required: true,
+//   },
+//   imageUrl: {
+//     type: String,
+//   },
+// });
 
 const User = mongoose.model("User", UserSchema);
 
 const Image = mongoose.model("Image", ImageSchema);
+
+// const ImageProfile = mongoose.model("ImageProfile", ProfileImageSchema);
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -124,7 +145,10 @@ app.get("/user/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const gueriedUser = await User.findById(userId).populate("galleries");
+    const queriedUser = await User.findById(userId).populate(
+      "galleries"
+      // "profileImage"
+    );
     if (queriedUser) {
       res.status(200).json({ response: queriedUser, success: true });
     } else {
@@ -151,7 +175,25 @@ app.get("/user/:userId/images", async (req, res) => {
   }
 });
 
+// app.get("/user/:userId/profileimage", async (req, res) => {
+//   const { userId } = req.params;
+
+//   try {
+//     const queriedUser = await User.findById(userId).populate("galleries");
+//     if (queriedUser) {
+//       res.status(200).json({ response: queriedUser.galleries, success: true });
+//     } else {
+//       res.status(404).json({ response: "User not found", success: false });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(400).json({ response: error, success: false });
+//   }
+// });
+
 // user not found
+
+// POST STARTS HERE
 
 app.post("/signup", async (req, res) => {
   const { name, username, password, email } = req.body;
@@ -228,6 +270,7 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
     const image = await new Image({
       imageName: req.body.filename,
       imageUrl: req.file.path,
+      profileUrl: req.file.path,
       //category needs to be saved here?
 
       category: req.body.category,
@@ -238,6 +281,7 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
       await User.findByIdAndUpdate(userId, {
         $push: {
           galleries: image,
+          profileImage: image,
         },
       });
       res.status(200).json({
@@ -251,6 +295,43 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
     res.status(400).json({ errors: err.errors });
   }
 });
+
+// trying to do a profileImg
+// app.post(
+//   "/uploadprofile/:userId",
+//   parser.single("imageProfile"),
+//   async (req, res) => {
+//     const { userId } = req.params;
+//     console.log(req.body);
+//     console.log(req.file);
+//     try {
+//       const profileImage = await new ImageProfile({
+//         imageName: req.body.filename,
+//         imageUrl: req.file.path,
+//         //category needs to be saved here?
+//       }).save();
+
+//       const user = await User.findById(userId);
+//       if (user) {
+//         await User.findByIdAndUpdate(userId, {
+//           $push: {
+//             ImageProfile: profileImage,
+//           },
+//         });
+//         res.status(200).json({
+//           response: profileImage,
+//           success: true,
+//         });
+//       } else {
+//         res.status(404).json({ response: "User not found", success: false });
+//       }
+//     } catch (err) {
+//       res.status(400).json({ errors: err.errors });
+//     }
+//   }
+// );
+
+// here it stops
 
 app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
   res.json({

@@ -8,7 +8,7 @@ import image from "../reducers/image";
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
-  const images = useSelector((store) => store.image.images);
+  // const images = useSelector((store) => store.image.images);
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const MyWardrobe = () => {
   const categoryClothes = selectedCategory.filter(
     (item) => item.category === category
   );
+
   console.log(selectedCategory);
   console.log(categoryClothes);
   console.log(category);

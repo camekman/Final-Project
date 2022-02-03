@@ -12,6 +12,7 @@ const initialState = {
   name: null,
   username: null,
   galleries: null,
+  profileImage: null,
   email: null,
   accessToken: null,
   error: null,
@@ -35,6 +36,9 @@ const user = createSlice({
     },
     setGalleries: (store, action) => {
       store.galleries = action.payload;
+    },
+    setProfileImage: (store, action) => {
+      store.profileImage = action.payload;
     },
     setAccessToken: (store, action) => {
       store.accessToken = action.payload;

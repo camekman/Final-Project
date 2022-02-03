@@ -19,6 +19,8 @@ const UploadImage = () => {
 
   const dispatch = useDispatch();
 
+  //fetching the images
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
