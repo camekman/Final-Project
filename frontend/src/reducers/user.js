@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// galleries: [
-//   {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "Image",
-//   },
-// ],
-
 const initialState = {
   userId: null,
   name: null,
@@ -52,15 +45,3 @@ const user = createSlice({
   },
 });
 export default user;
-
-// export const fetchUpload = () => {
-//  return (dispatch, getState) =>{
-//  fetch('http://localhost:8080/upload/:userId", {
-//   method: "POST",
-//   body: formData,
-//  },
-//  )
-//  .then((res) => res.json())
-//  .then((data) => dispatch(user.actions.setGalleries)))
-
-// }

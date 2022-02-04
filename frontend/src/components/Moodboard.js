@@ -4,12 +4,12 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { API_URL } from "../utils/urls";
-import image from "../reducers/image";
+// import { API_URL } from "../utils/urls";
+// import image from "../reducers/image";
 
 const Moodboard = () => {
-  const accessToken = useSelector((store) => store.user.accessToken);
-  const userId = useSelector((store) => store.user.userId);
+  // const accessToken = useSelector((store) => store.user.accessToken);
+  // const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
 
   // const dispatch = useDispatch();

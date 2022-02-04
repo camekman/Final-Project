@@ -14,7 +14,7 @@ const image = createSlice({
     addImage: (store, action) => {
       store.images.push(action.payload);
     },
-    setCategory: (store, action) => {
+    addCategory: (store, action) => {
       store.images.category(action.payload);
     },
   },

@@ -52,7 +52,7 @@ const MyWardrobe = () => {
             })
           );
           dispatch(image.actions.setImages(images));
-          dispatch(image.actions.setCategory(category));
+          dispatch(image.actions.addCategory(category));
         }
       });
   }, [accessToken, userId, category, dispatch]);

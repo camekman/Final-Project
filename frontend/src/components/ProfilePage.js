@@ -4,21 +4,24 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import user from "../reducers/user";
-import image from "../reducers/image";
+
 import { API_URL } from "../utils/urls";
 
 const ProfilePage = () => {
-  // const [mode, setMode] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  // const [profileImage, setProfileImage] = useState("");
 
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
 
   const images = useSelector((store) => store.image.images);
+  // const profileImage = useSelector((store) => store.image.profileImage);
+
   const fileInput = useRef();
   const userId = useSelector((store) => store.user.userId);
 
-  const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
+  const UPLOAD_URL = `http://localhost:8080/uploadprofile/${userId}`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,7 +45,7 @@ const ProfilePage = () => {
       .then((json) => {
         console.log(json);
       });
-  }, [accessToken]);
+  }, [accessToken, userId]);
 
   const handleRestart = () => {
     dispatch(user.actions.restart());
@@ -54,20 +57,29 @@ const ProfilePage = () => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("image", fileInput.current.files[0]);
-    formData.append("name", name);
 
     const options = {
       method: "POST",
       body: formData,
     };
 
+    // skapa ny upload profile url
     fetch(UPLOAD_URL, options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
+        console.log("hej", json.imageUrl);
+
         if (json.success) {
-          dispatch(image.actions.setImages(json.response));
+          dispatch(user.actions.setImageUrl(imageUrl));
+
+          // dispatch(profileImage.actions.setProfileUrl(json.response));
+          // setProfileUrl(json.response);
+          //setProfileImage(json.response);
+
+          setImageUrl(json.imageUrl);
         } else {
+          // TO DO
         }
       })
       .catch((err) => console.log(err));
@@ -80,7 +92,14 @@ const ProfilePage = () => {
       <form onSubmit={handleFormSubmit}>
         <input type="file" ref={fileInput} />
         <ProfilePicture>
-          {<img src={images.profileUrl} alt="Upload" />}
+          {/* FUNKAR */}
+          {/* <img src={imageUrl} alt="ProfilePicture" /> */}
+          <img src={images.imageUrl} alt="ProfilePicture" />
+          {/* <img src={images[imageUrl]} alt="ProfilePicture" /> */}
+
+          {/* FUNKAR EJ */}
+          {/* <img src={images[images.length - 1].imageUrl} alt="Upload" /> */}
+          {/* <img src={profileImage[imageUrl.length - 1].imageUrl} alt="Upload" /> */}
 
           <button type="submit">Continue</button>
         </ProfilePicture>

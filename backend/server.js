@@ -36,12 +36,17 @@ const UserSchema = new mongoose.Schema({
       ref: "Image",
     },
   ],
-  profileImage: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Image",
+  // profileImage: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "ProfileImage",
+  // },
+  profileImage: {
+    type: String,
+    imageUrl: {
+      type: String,
     },
-  ],
+    ref: "Image",
+  },
   email: {
     type: String,
     required: true,
@@ -69,9 +74,9 @@ const ImageSchema = new mongoose.Schema({
     required: true,
     enum: ["dresses", "tops", "Jackets/Coats", "sweatshirts", "pants"],
   },
-  profileUrl: {
-    type: String,
-  },
+  // profileUrl: {
+  //   type: String,
+  // },
 });
 
 // const ProfileImageSchema = new mongoose.Schema({
@@ -79,7 +84,7 @@ const ImageSchema = new mongoose.Schema({
 //     type: String,
 //     // required: true,
 //   },
-//   imageUrl: {
+//   profileUrl: {
 //     type: String,
 //   },
 // });
@@ -88,7 +93,7 @@ const User = mongoose.model("User", UserSchema);
 
 const Image = mongoose.model("Image", ImageSchema);
 
-// const ImageProfile = mongoose.model("ImageProfile", ProfileImageSchema);
+// const ProfileImage = mongoose.model("ProfileImage", ProfileImageSchema);
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -146,8 +151,8 @@ app.get("/user/:userId", async (req, res) => {
 
   try {
     const queriedUser = await User.findById(userId).populate(
-      "galleries"
-      // "profileImage"
+      "galleries",
+      "profileImage"
     );
     if (queriedUser) {
       res.status(200).json({ response: queriedUser, success: true });
@@ -270,9 +275,6 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
     const image = await new Image({
       imageName: req.body.filename,
       imageUrl: req.file.path,
-      profileUrl: req.file.path,
-      //category needs to be saved here?
-
       category: req.body.category,
     }).save();
 
@@ -281,7 +283,7 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
       await User.findByIdAndUpdate(userId, {
         $push: {
           galleries: image,
-          profileImage: image,
+          // profileImage: image,
         },
       });
       res.status(200).json({
@@ -297,50 +299,47 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
 });
 
 // trying to do a profileImg
-// app.post(
-//   "/uploadprofile/:userId",
-//   parser.single("imageProfile"),
-//   async (req, res) => {
-//     const { userId } = req.params;
-//     console.log(req.body);
-//     console.log(req.file);
-//     try {
-//       const profileImage = await new ImageProfile({
-//         imageName: req.body.filename,
-//         imageUrl: req.file.path,
-//         //category needs to be saved here?
+// app.post("/uploadprofile/:userId", async (req, res) => {
+//   const { userId, profileImage } = req.body;
+//   console.log(req.body);
+//   console.log("upload profile", req.file);
+
+//   try {
+//     const profileImage = await new User({
+//       imageUrl: req.file.path,
+//     }).save();
+
+//     const user = await User.findById(userId, profileImage);
+//     if (user) {
+//       await User.findByIdAndUpdate(userId, profileImage, {
+//         $push: {
+//           profileImage: profileImage,
+//         },
 //       }).save();
-
-//       const user = await User.findById(userId);
-//       if (user) {
-//         await User.findByIdAndUpdate(userId, {
-//           $push: {
-//             ImageProfile: profileImage,
-//           },
-//         });
-//         res.status(200).json({
-//           response: profileImage,
-//           success: true,
-//         });
-//       } else {
-//         res.status(404).json({ response: "User not found", success: false });
-//       }
-//     } catch (err) {
-//       res.status(400).json({ errors: err.errors });
+//       res.status(200).json({
+//         response: {
+//           profileImage: user.profileImage,
+//           profileImage: profileImage,
+//         },
+//         success: true,
+//       });
+//     } else {
+//       res.status(404).json({ response: "User not found", success: false });
 //     }
+//   } catch (err) {
+//     res.status(400).json({ errors: err.errors });
 //   }
-// );
-
+// });
 // here it stops
 
-app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
+app.post("/uploadprofile/:userId", parser.single("image"), async (req, res) => {
   res.json({
     imageUrl: req.file.path,
     imageId: req.file.filename,
   });
 });
 
-app.post("/fleemarketwardrob", parser.single("image"), async (req, res) => {
+app.post("/uploadprofile/:userId", parser.single("image"), async (req, res) => {
   try {
     const image = await new Image({
       imagName: req.body.filename,
