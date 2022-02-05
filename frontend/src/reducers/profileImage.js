@@ -1,8 +1,7 @@
 // import { createSlice } from "@reduxjs/toolkit";
 
 // const initialState = {
-//   images: null,
-//   profileUrl: null,
+//   images: [],
 // };
 
 // const profileImage = createSlice({
@@ -12,12 +11,10 @@
 //     setImages: (store, action) => {
 //       store.images = action.payload;
 //     },
-//     setProfileUrl: (store, action) => {
-//       store.profileUrl = action.payload;
-//     },
-//     // addImage: (store, action) => {
-//     //   store.images.push(action.payload);
-//     // },
+
+//     addImage: (store, action) => {
+//        store.images.push(action.payload);
+//      },
 //   },
 // });
 

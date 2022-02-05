@@ -3,15 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 
 // import { API_URL } from "../utils/urls";
 // import image from "../reducers/image";
 
 const Moodboard = () => {
+  //CO
   // const accessToken = useSelector((store) => store.user.accessToken);
   // const userId = useSelector((store) => store.user.userId);
+
+  //NCO
   const images = useSelector((store) => store.image.images);
 
+  //CO
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
 
@@ -43,8 +49,14 @@ const Moodboard = () => {
   //     });
   // }, [accessToken, userId, dispatch]);
 
+  //NO
+  // onDragEnd = (result) => {
+  //    to do
+  // };
+
   return (
     <Container>
+      {/* <DragDropContext onDragEnd={this.onDragEnd}> */}
       <h1>Create your perfect outfit combinations </h1>
       <div>
         <Link to="/MyWardrobe">MyWardrobe</Link>
@@ -56,13 +68,33 @@ const Moodboard = () => {
       <div>
         <Link to="/uploadImage">Upload new image</Link>
       </div>
-      <div>
-        <MoodboardContainer>
-          {images.map(({ id, imageUrl }) => (
-            <img src={imageUrl} alt={id} key={id} />
-          ))}
-        </MoodboardContainer>
-      </div>
+
+      {/* <Droppable droppableId={this.props.images.id}>
+          {(provided) => (
+            <MoodboardContainer {...provided.droppableProps}>
+              <Draggable
+                draggableId={this.props.image.id}
+                index={this.props.index}
+              >
+                {" "}
+                {(provided) => (
+                  <div>
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    innerRef={provided.innerRef}
+                    <div>
+                      {images.map(({ id, imageUrl, index }) => (
+                        <img src={imageUrl} alt={id} key={id} index={index} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </Draggable>
+              {provided.placeholder}
+            </MoodboardContainer>
+          )}
+        </Droppable>
+      </DragDropContext> */}
     </Container>
   );
 };

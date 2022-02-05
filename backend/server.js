@@ -41,11 +41,8 @@ const UserSchema = new mongoose.Schema({
   //   ref: "ProfileImage",
   // },
   profileImage: {
-    type: String,
-    imageUrl: {
-      type: String,
-    },
-    ref: "Image",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "ProfileImage",
   },
   email: {
     type: String,
@@ -93,7 +90,10 @@ const User = mongoose.model("User", UserSchema);
 
 const Image = mongoose.model("Image", ImageSchema);
 
-// const ProfileImage = mongoose.model("ProfileImage", ProfileImageSchema);
+const ProfileImage = mongoose.model("ProfileImage", {
+  name: String,
+  imageUrl: String,
+});
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -298,54 +298,14 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   }
 });
 
-// trying to do a profileImg
-// app.post("/uploadprofile/:userId", async (req, res) => {
-//   const { userId, profileImage } = req.body;
-//   console.log(req.body);
-//   console.log("upload profile", req.file);
-
-//   try {
-//     const profileImage = await new User({
-//       imageUrl: req.file.path,
-//     }).save();
-
-//     const user = await User.findById(userId, profileImage);
-//     if (user) {
-//       await User.findByIdAndUpdate(userId, profileImage, {
-//         $push: {
-//           profileImage: profileImage,
-//         },
-//       }).save();
-//       res.status(200).json({
-//         response: {
-//           profileImage: user.profileImage,
-//           profileImage: profileImage,
-//         },
-//         success: true,
-//       });
-//     } else {
-//       res.status(404).json({ response: "User not found", success: false });
-//     }
-//   } catch (err) {
-//     res.status(400).json({ errors: err.errors });
-//   }
-// });
-// here it stops
-
-app.post("/uploadprofile/:userId", parser.single("image"), async (req, res) => {
-  res.json({
-    imageUrl: req.file.path,
-    imageId: req.file.filename,
-  });
-});
-
-app.post("/uploadprofile/:userId", parser.single("image"), async (req, res) => {
+// new post profile image -- add user id
+app.post("/profile/:userId", parser.single("image"), async (req, res) => {
   try {
-    const image = await new Image({
-      imagName: req.body.filename,
+    const profile = await new ProfileImage({
+      name: req.body.filename,
       imageUrl: req.file.path,
     }).save();
-    res.json(image);
+    res.json(profile);
   } catch (err) {
     res.status(400).json({ errors: err.errors });
   }
