@@ -11,6 +11,7 @@ const MyWardrobe = () => {
   const userId = useSelector((store) => store.user.userId);
 
   const [category, setCategory] = useState("");
+  const [selectedImage, SetSelectedImage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,9 +70,14 @@ const MyWardrobe = () => {
     setCategory(event.target.value);
   };
 
+  const onSelectedImage = (event) => {
+    SetSelectedImage(event.target.value);
+  };
+
   return (
     <>
       <Container>
+        <h1>MOODBOARD</h1>
         <div>
           <Link to="/MyWardrobe">MyWardrobe</Link>
           <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
@@ -79,29 +85,33 @@ const MyWardrobe = () => {
           <Link to="/Inspiration">Inspiration</Link>
           <Link to="/profile">ProfilePage</Link>
         </div>
-        <ImageContainer>
-          <div>
-            {buttonCategory.map((category) => (
-              <button
-                key={category}
-                value={category}
-                onClick={onCategoryChange}
-              >
-                {category}
+        <Wrapper>
+          <ImageContainer>
+            <div>
+              {buttonCategory.map((category) => (
+                <button
+                  key={category}
+                  value={category}
+                  onClick={onCategoryChange}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            {categoryClothes.map(({ id, category, imageUrl }) => (
+              <button key={id} value={imageUrl} onClick={onSelectedImage}>
+                <div key={id}>
+                  <Image src={imageUrl} alt={category} />
+                </div>
               </button>
             ))}
-          </div>
-
-          {categoryClothes.map(({ id, category, imageUrl }) => (
-            <button>
-              <div key={id}>
-                <Image src={imageUrl} alt={category} />
-              </div>
-            </button>
-          ))}
-        </ImageContainer>
-        <MoodboardTablet> This is your mood-tablet</MoodboardTablet>
-
+          </ImageContainer>
+          <MoodboardTablet>
+            This is your mood-tablet
+            <img src={selectedImage} alt="image" />
+          </MoodboardTablet>
+        </Wrapper>
         <div>
           <Link to="/uploadImage">Upload new image</Link>
         </div>
@@ -114,10 +124,16 @@ export default MyWardrobe;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 10px;
   border: 3px solid black;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  padding: 10px;
+  border: 2px solid blue;
+`;
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
