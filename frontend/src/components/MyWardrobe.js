@@ -90,8 +90,8 @@ const MyWardrobe = () => {
       <div>
         {categoryClothes.map(({ id, category, imageUrl }) => (
           <div key={id}>
-            {" "}
-            <img src={imageUrl} alt={category} /> <DeleteImage imageId={id} />
+            <img src={imageUrl} alt={category} />
+            <DeleteImage imageId={id} />
           </div>
         ))}
       </div>
