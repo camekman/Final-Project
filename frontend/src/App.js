@@ -19,12 +19,12 @@ import Moodboard from "./components/Moodboard";
 
 import user from "./reducers/user";
 import image from "./reducers/image";
-// import profileImage from "./reducers/profileImage";
+import profileImage from "./reducers/profileImage";
 
 const reducer = combineReducers({
   user: user.reducer,
   image: image.reducer,
-  // profileImage: profileImage.reducer,
+  profileImage: profileImage.reducer,
 });
 
 const store = configureStore({ reducer });

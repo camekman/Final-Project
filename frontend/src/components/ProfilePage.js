@@ -2,22 +2,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-// import profileImage from "../reducers/profileImage";
 
 import user from "../reducers/user";
+import profileImage from "../reducers/profileImage";
 
 import { API_URL } from "../utils/urls";
 
 const ProfilePage = () => {
-  // const [imageUrl, setImageUrl] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  //const [uploadComplete, setUploadComplete] = useState(false);
 
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
 
-  // const images = useSelector((store) => store.user.images);
-  // const profileImage = useSelector((store) => store.image.profileImage);
+  const image = useSelector((store) => store.profileImage.images);
+  // const images = useSelector((store) => store.image.profileImage);
 
   const fileInput = useRef();
   const userId = useSelector((store) => store.user.userId);
@@ -41,12 +41,15 @@ const ProfilePage = () => {
       },
     };
 
-    fetch(API_URL(`user/${userId}`), options)
+    fetch(API_URL(`user/${userId}/profile`), options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
+        if (json.success) {
+          setProfileImage(json.response.imageUrl);
+        }
       });
-  }, [accessToken, userId]);
+  }, [accessToken, userId, dispatch]);
 
   const handleRestart = () => {
     dispatch(user.actions.restart());
@@ -65,17 +68,16 @@ const ProfilePage = () => {
       body: formData,
     };
 
-    // skapa ny upload profile url
     fetch(UPLOAD_URL, options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        if (json.success) {
-          // dispatch(user.actions.setProfileImage(json.imageUrl));
-          // dispatch(profileImage.actions.setProfileUrl(json.response));
+        // dispatch(user.actions.setProfileImage(json.response));
 
-          setProfileImage(json.imageUrl);
-        }
+        //dispatch(profileImage.actions.setImages(json.response));
+
+        setProfileImage(json.imageUrl);
+        //setUploadComplete(true);
       });
   };
 
@@ -86,11 +88,20 @@ const ProfilePage = () => {
       <form onSubmit={handleFormSubmit}>
         <input type="file" ref={fileInput} />
         <ProfilePicture>
-          <img src={profileImage} alt="ProfilePicture" />
-
           <button type="submit">Continue</button>
         </ProfilePicture>
       </form>
+      <div>
+        <img
+          style={{
+            width: "200px",
+            height: "200px",
+            borderRadius: "50%",
+          }}
+          src={profileImage}
+          alt="ProfilePicture"
+        />
+      </div>
       <Link to="/MyWardrobe">MyWardrobe</Link>
       <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
       <Link to="/Moodboard">Moodboard</Link>
@@ -120,8 +131,8 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  border: 3px solid black;
-  border-radius: 50%;
+  /* border: 3px solid black;
+  border-radius: 50%; */
   width: 100px;
   height: 100px;
   text-align: center;

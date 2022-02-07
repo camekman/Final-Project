@@ -56,6 +56,7 @@ const MyWardrobe = () => {
         }
       });
   }, [accessToken, userId, category, dispatch]);
+
   const buttonCategory = [
     "dresses",
     "tops",

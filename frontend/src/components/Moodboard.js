@@ -1,31 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
-
-// import { API_URL } from "../utils/urls";
-// import image from "../reducers/image";
+import MyWardrobe from "./MyWardrobe";
+import { API_URL } from "../utils/urls";
+import image from "../reducers/image";
 
 const Moodboard = () => {
+  const [category, setCategory] = useState("");
+
   //CO
-  // const accessToken = useSelector((store) => store.user.accessToken);
-  // const userId = useSelector((store) => store.user.userId);
+  const accessToken = useSelector((store) => store.user.accessToken);
+  const userId = useSelector((store) => store.user.userId);
 
   //NCO
   const images = useSelector((store) => store.image.images);
 
   //CO
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/login");
-  //   }
-  // }, [accessToken, navigate]);
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/login");
+    }
+  }, [accessToken, navigate]);
 
   // fetching uploaded images
 
@@ -54,8 +56,26 @@ const Moodboard = () => {
   //    to do
   // };
 
+  const buttonCategory = [
+    "dresses",
+    "tops",
+    "Jackets/Coats",
+    "sweatshirts",
+    "pants",
+  ];
+  const onCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
   return (
     <Container>
+      <div>
+        {buttonCategory.map((category) => (
+          <button key={category} value={category} onClick={onCategoryChange}>
+            {category}
+          </button>
+        ))}
+      </div>
       {/* <DragDropContext onDragEnd={this.onDragEnd}> */}
       <h1>Create your perfect outfit combinations </h1>
       <div>
@@ -69,7 +89,7 @@ const Moodboard = () => {
         <Link to="/uploadImage">Upload new image</Link>
       </div>
 
-      {/* <Droppable droppableId={this.props.images.id}>
+      {/* { <Droppable droppableId={this.props.images.id}>
           {(provided) => (
             <MoodboardContainer {...provided.droppableProps}>
               <Draggable
@@ -81,20 +101,20 @@ const Moodboard = () => {
                   <div>
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    innerRef={provided.innerRef}
-                    <div>
-                      {images.map(({ id, imageUrl, index }) => (
-                        <img src={imageUrl} alt={id} key={id} index={index} />
-                      ))}
-                    </div>
-                  </div>
+                    innerRef={provided.innerRef} */}
+      <div>
+        {images.map(({ id, imageUrl, index }) => (
+          <img src={imageUrl} alt={id} key={id} index={index} />
+        ))}
+      </div>
+      {/* </div>
                 )}
               </Draggable>
               {provided.placeholder}
             </MoodboardContainer>
           )}
         </Droppable>
-      </DragDropContext> */}
+      </DragDropContext> }*/}
     </Container>
   );
 };

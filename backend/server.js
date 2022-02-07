@@ -180,23 +180,24 @@ app.get("/user/:userId/images", async (req, res) => {
   }
 });
 
-// app.get("/user/:userId/profileimage", async (req, res) => {
-//   const { userId } = req.params;
+app.get("/user/:userId/profile", async (req, res) => {
+  const { userId } = req.params;
 
-//   try {
-//     const queriedUser = await User.findById(userId).populate("galleries");
-//     if (queriedUser) {
-//       res.status(200).json({ response: queriedUser.galleries, success: true });
-//     } else {
-//       res.status(404).json({ response: "User not found", success: false });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(400).json({ response: error, success: false });
-//   }
-// });
-
-// user not found
+  try {
+    const queriedUser = await User.findById(userId).populate("profileImage");
+    console.log(queriedUser);
+    if (queriedUser) {
+      res
+        .status(200)
+        .json({ response: queriedUser.profileImage, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ response: error, success: false });
+  }
+});
 
 // POST STARTS HERE
 
@@ -257,15 +258,15 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.post("/gallery", async (req, res) => {
-  const { description } = req.body;
-  try {
-    const newGallery = await new Gallery({ description }).save();
-    res.status(201).json({ response: newGallery, success: true });
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
-  }
-});
+// app.post("/gallery", async (req, res) => {
+//   const { description } = req.body;
+//   try {
+//     const newGallery = await new Gallery({ description }).save();
+//     res.status(201).json({ response: newGallery, success: true });
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
+// });
 
 app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   const { userId } = req.params;
@@ -300,11 +301,23 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
 
 // new post profile image -- add user id
 app.post("/profile/:userId", parser.single("image"), async (req, res) => {
+  const { userId } = req.params;
   try {
     const profile = await new ProfileImage({
       name: req.body.filename,
       imageUrl: req.file.path,
     }).save();
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          profileImage: profile,
+        },
+      },
+      { new: true }
+    );
+
     res.json(profile);
   } catch (err) {
     res.status(400).json({ errors: err.errors });

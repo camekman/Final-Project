@@ -57,22 +57,9 @@ const UploadImage = () => {
         <StyledForm onSubmit={handleFormSubmit}>
           <UploadSection>
             <p>Choose your image here:</p>
-            <input
-              type="file"
-              ref={fileInput}
-              // onChange={(e) => setGalleries(e.target.ref)}
-            />
+            <input type="file" ref={fileInput} />
             <Link to="/MyWardrobe">MyWardrobe</Link>
           </UploadSection>
-
-          {/* <label>
-            Type of garment:
-            <input
-              type="text"
-              value={imageName}
-              onChange={(e) => setImageName(e.target.value)}
-            />
-          </label> */}
           <select value={category} onChange={onCategoryChange}>
             <option value="dresses">Dresses</option>
             <option value="tops">Tops</option>
