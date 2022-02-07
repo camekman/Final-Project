@@ -4,23 +4,17 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import user from "../reducers/user";
-import profileImage from "../reducers/profileImage";
 
 import { API_URL } from "../utils/urls";
 
 const ProfilePage = () => {
+  const fileInput = useRef();
   const [profileImage, setProfileImage] = useState("");
-  //const [uploadComplete, setUploadComplete] = useState(false);
 
+  const userId = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
-
-  const image = useSelector((store) => store.profileImage.images);
-  // const images = useSelector((store) => store.image.profileImage);
-
-  const fileInput = useRef();
-  const userId = useSelector((store) => store.user.userId);
 
   const UPLOAD_URL = `http://localhost:8080/profile/${userId}`;
 
@@ -72,12 +66,8 @@ const ProfilePage = () => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        // dispatch(user.actions.setProfileImage(json.response));
-
-        //dispatch(profileImage.actions.setImages(json.response));
 
         setProfileImage(json.imageUrl);
-        //setUploadComplete(true);
       });
   };
 
@@ -131,8 +121,6 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfilePicture = styled.div`
-  /* border: 3px solid black;
-  border-radius: 50%; */
   width: 100px;
   height: 100px;
   text-align: center;

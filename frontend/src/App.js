@@ -16,6 +16,7 @@ import Inspiration from "./components/Inspiration";
 import MyWardrobe from "./components/MyWardrobe";
 import MyFleeMarketWardrobe from "./components/MyFleeMarketWardorbe";
 import Moodboard from "./components/Moodboard";
+// import DeleteImage from "./components/DeleteImage";
 
 import user from "./reducers/user";
 import image from "./reducers/image";

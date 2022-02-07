@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
+import DeleteImage from "./DeleteImage";
 
 import image from "../reducers/image";
 
@@ -86,17 +87,15 @@ const MyWardrobe = () => {
         ))}
       </div>
 
-      {/* kan vi koppla denna till "show all" */}
-      {/* <div>
-        {images.map(({ id, imageUrl }) => (
-          <img src={imageUrl} alt={id} key={id} />
-        ))}
-      </div> */}
       <div>
         {categoryClothes.map(({ id, category, imageUrl }) => (
-          <img src={imageUrl} alt={category} key={id} />
+          <div key={id}>
+            {" "}
+            <img src={imageUrl} alt={category} /> <DeleteImage imageId={id} />
+          </div>
         ))}
       </div>
+
       <div>
         <Link to="/uploadImage">Upload new image</Link>
       </div>

@@ -36,10 +36,6 @@ const UserSchema = new mongoose.Schema({
       ref: "Image",
     },
   ],
-  // profileImage: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "ProfileImage",
-  // },
   profileImage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "ProfileImage",
@@ -61,7 +57,6 @@ const UserSchema = new mongoose.Schema({
 const ImageSchema = new mongoose.Schema({
   imageName: {
     type: String,
-    // required: true,
   },
   imageUrl: {
     type: String,
@@ -71,20 +66,7 @@ const ImageSchema = new mongoose.Schema({
     required: true,
     enum: ["dresses", "tops", "Jackets/Coats", "sweatshirts", "pants"],
   },
-  // profileUrl: {
-  //   type: String,
-  // },
 });
-
-// const ProfileImageSchema = new mongoose.Schema({
-//   imageName: {
-//     type: String,
-//     // required: true,
-//   },
-//   profileUrl: {
-//     type: String,
-//   },
-// });
 
 const User = mongoose.model("User", UserSchema);
 
@@ -258,16 +240,6 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-// app.post("/gallery", async (req, res) => {
-//   const { description } = req.body;
-//   try {
-//     const newGallery = await new Gallery({ description }).save();
-//     res.status(201).json({ response: newGallery, success: true });
-//   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
-//   }
-// });
-
 app.post("/upload/:userId", parser.single("image"), async (req, res) => {
   const { userId } = req.params;
   console.log(req.body);
@@ -284,7 +256,6 @@ app.post("/upload/:userId", parser.single("image"), async (req, res) => {
       await User.findByIdAndUpdate(userId, {
         $push: {
           galleries: image,
-          // profileImage: image,
         },
       });
       res.status(200).json({
@@ -321,6 +292,24 @@ app.post("/profile/:userId", parser.single("image"), async (req, res) => {
     res.json(profile);
   } catch (err) {
     res.status(400).json({ errors: err.errors });
+  }
+});
+
+// ---------------- DELETE --------------------
+app.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleteImage = await Image.findOneAndDelete({
+      _id: id,
+    });
+    if (deleteImage) {
+      res.status(200).json({ response: deleteImage, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
   }
 });
 
