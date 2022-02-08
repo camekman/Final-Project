@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+// import fashionbackground from "./assets/fashionbackground.jpg";
 
 const HomePage = () => {
   return (
@@ -11,18 +12,19 @@ const HomePage = () => {
         <Link to="/aboutUs">WHATS SUSTA?</Link>
       </Header>
       <HomePageContainer>
-        <h2>Your virtual wardrobe</h2>
-        <ContentContainer>
+        <Header>Your virtual wardrobe</Header>
+       
+        <Header>Create a count </Header>
+         <ContentContainer>
           <h3>
             <Link to="/SignUp">Signup</Link>
           </h3>
         </ContentContainer>
-        <h4>Create a count </h4>
         <p>
           Start organize your cloth -as soon you got the app Creat your
           moodboard, collect inspiration, follow others and much more.
         </p>
-
+       
         <LinkSection>
           <p>
             Already a member?
@@ -37,24 +39,15 @@ const HomePage = () => {
 export default HomePage;
 
 const BackgroundImage = styled.main`
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 0, 0, 0),
-    rgba(255, 0, 0, 1)
-  );
-  /* background-image: url("./fashion.jpg"); */
-  /* background-color: black; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 700px;
+  background-image: url("./assets/background.png");
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  height: 110vh;
 `;
 const Header = styled.div`
   font-family: "Righteous", cursive;
@@ -64,18 +57,17 @@ const Header = styled.div`
   justify-content: center;
   text-align: center;
   /* justify-content: center; */
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
-const HomePageContainer = styled.div`
-  width: 60%;
-  height: 60%;
-  color: white;
+const HomePageContainer = styled.main`
+  
+  color: black;
   font-family: "Righteous", cursive;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 0, 0, 0),
-    rgba(380, 0, 0, 1)
-  );
+   /* background-image: url("./assets/background.png"); */
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.15);
@@ -97,11 +89,15 @@ const ContentContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 45%;
-  padding: 20px;
-  margin: 20px;
+  padding: 5px;
+  margin: 5px;
+
 `;
 
+
+
 const LinkSection = styled.div`
+color: black;
   display: flex;
   gap: 50px;
 `;

@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 import styled from "styled-components";
-
 import image from "../reducers/image";
 
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
+  const images = useSelector((store) => store.image.images);
+  console.log(images);
 
   const [category, setCategory] = useState("");
-  const [selectedImage, SetSelectedImage] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,10 +25,7 @@ const MyWardrobe = () => {
     (item) => item.category === category
   );
 
-  console.log(selectedCategory);
-  console.log(categoryClothes);
-  console.log(category);
-
+console.log(selectedImages);
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -70,8 +68,20 @@ const MyWardrobe = () => {
     setCategory(event.target.value);
   };
 
-  const onSelectedImage = (event) => {
-    SetSelectedImage(event.target.value);
+  const onSelectImage = (event) => {
+    if (!selectedImages.find(({id}) => event.target.dataset.id)) {
+      setSelectedImages([
+        ...selectedImages,
+        {
+          id: event.target.dataset.id,
+          imageUrl: event.target.src
+        }
+      ]);
+    }
+  };
+
+  const onDeleteMoodboard = () => {
+    setSelectedImages([]);
   };
 
   return (
@@ -100,17 +110,20 @@ const MyWardrobe = () => {
             </div>
 
             {categoryClothes.map(({ id, category, imageUrl }) => (
-              <button key={id} value={imageUrl} onClick={onSelectedImage}>
+              <button key={category} onClick={onSelectImage}>
                 <div key={id}>
-                  <Image src={imageUrl} alt={category} />
+                  <Image src={imageUrl} data-id={id} alt={category} />
                 </div>
               </button>
             ))}
           </ImageContainer>
-          <MoodboardTablet>
-            This is your mood-tablet
-            <img src={selectedImage} alt="image" />
-          </MoodboardTablet>
+
+          <MoodBoardTablet>
+
+            This is your mood-tablet onSelect
+          {selectedImages.map(({ imageUrl }) => <Image src={imageUrl} alt="" />)}
+          <button onClick={onDeleteMoodboard} > DELETE</button>
+          </MoodBoardTablet>
         </Wrapper>
         <div>
           <Link to="/uploadImage">Upload new image</Link>
@@ -119,6 +132,10 @@ const MyWardrobe = () => {
     </>
   );
 };
+
+// {products.map((product) => (
+//   <CartItem key={product.id} product={product} />
+// ))}
 
 export default MyWardrobe;
 
@@ -140,7 +157,7 @@ const ImageContainer = styled.div`
   padding: 10px;
   border: 1px solid green;
 `;
-const MoodboardTablet = styled.div`
+const MoodBoardTablet = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;

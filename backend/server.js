@@ -313,6 +313,8 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 
+// ---------------- ADD MOOD IMAGE --------------------
+
 // ------------ START SERVER --------------------------------------
 app.listen(port, () => {
   // eslint-disable-next-line

@@ -9,6 +9,7 @@ const image = createSlice({
   initialState,
   reducers: {
     setImages: (store, action) => {
+      console.log(action.payload);
       store.images = action.payload;
     },
     addImage: (store, action) => {
@@ -25,12 +26,16 @@ const image = createSlice({
         (image) => image.id !== action.payload
       );
     },
-    // deleteImage: (store, action) => {
-    //   const removeImage = store.images.filter(
-    //     (images) => images.id !== action.payload
-    //   );
-    //   store.images = removeImage;
-    // },
+    addMoodImage: (store, action) => {
+      const existingImages = store.images.filter(
+        (image) => image.id === action.payload.id
+      );
+      if (existingImages) {
+        existingImages.quantity += 1;
+      } else {
+        store.images.push({ ...action.payload, quantity: 1 });
+      }
+    },
   },
 });
 
@@ -41,4 +46,15 @@ export default image;
 //     (item) => item.id !== action.payload
 //   );
 //   store.items = decreasedItems;
+// },
+
+// addItem: (state, action) => {
+//   const existingProducts = state.items.find(
+//     (item) => item.id === action.payload.id
+//   );
+//   if (existingProducts) {
+//     existingProducts.quantity += 1;
+//   } else {
+//     state.items.push({ ...action.payload, quantity: 1 });
+//   }
 // },
