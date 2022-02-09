@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 import styled from "styled-components";
 import image from "../reducers/image";
+import DeleteImage from "./DeleteImage";
 
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -14,6 +15,7 @@ const MyWardrobe = () => {
 
   const [category, setCategory] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
+  const [selectOneImage, SetSelectOneImage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const MyWardrobe = () => {
   const buttonCategory = [
     "dresses",
     "tops",
-    "Jackets/Coats",
+    "jackets/coats",
     "sweatshirts",
     "pants",
   ];
@@ -67,8 +69,11 @@ const MyWardrobe = () => {
     setSelectedImages([...selectedImages, item]);
   };
 
-  const onDeleteMoodboard = () => {
+  const onDeleteMoodBoard = () => {
     setSelectedImages([]);
+  };
+  const onDeleteOneImage = () => {
+    SetSelectOneImage();
   };
 
   return (
@@ -77,43 +82,50 @@ const MyWardrobe = () => {
         <h1>MOODBOARD</h1>
         <div>
           <Link to="/MyWardrobe">MyWardrobe</Link>
-          <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
           <Link to="/Moodboard">Moodboard</Link>
-          <Link to="/Inspiration">Inspiration</Link>
           <Link to="/profile">ProfilePage</Link>
         </div>
         <Wrapper>
           <ImageContainer>
-            <div>
+            <ButtonContainer>
               {buttonCategory.map((category) => (
-                <button
+                <StyledButton
                   key={category}
                   value={category}
                   onClick={onCategoryChange}
                 >
                   {category}
-                </button>
+                </StyledButton>
               ))}
-            </div>
+            </ButtonContainer>
 
             {categoryClothes.map(({ id, category, imageUrl }) => (
-              <button
+              <ImageButton
                 key={id}
                 onClick={() => onSelectImage({ id, category, imageUrl })}
               >
                 <div key={id}>
                   <Image src={imageUrl} data-id={id} alt={category} />
                 </div>
-              </button>
+              </ImageButton>
             ))}
           </ImageContainer>
 
           <MoodBoardTablet>
             This is your mood-tablet onSelect
-            {selectedImages.map(({ imageUrl }) => (
-              <Image src={imageUrl} alt="" />
-            ))}
-            <button onClick={onDeleteMoodboard}> DELETE</button>
+            <MoodboardContainer>
+              {selectedImages.map(({ id, imageUrl }) => (
+                <MoodboardWrapper key={id}>
+                  <ImageStyled src={imageUrl} alt="" />
+                  <button onClick={() => onDeleteOneImage({ imageUrl })}>
+                    Delete
+                  </button>
+                </MoodboardWrapper>
+              ))}
+            </MoodboardContainer>
+            <DeleteButton onClick={onDeleteMoodBoard}>
+              Delete Moodboard
+            </DeleteButton>
           </MoodBoardTablet>
         </Wrapper>
         <div>
@@ -131,27 +143,99 @@ const Container = styled.div`
   flex-direction: column;
   padding: 10px;
   border: 3px solid black;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 10px;
+  flex-direction: column;
   border: 2px solid blue;
+  align-items: center;
+  justify-content: center;
 `;
 const ImageContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   padding: 10px;
   border: 1px solid green;
-`;
-const MoodBoardTablet = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  border: 1px solid green;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
   width: 100px;
   height: auto;
+  border-radius: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+  gap: 5px;
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  background-color: rgba(221, 133, 96, 1);
+  padding: 5px;
+  margin-top: 20px;
+  border: transparent;
+  border-radius: 10px;
+  color: whitesmoke;
+  font-family: "Righteous", cursive;
+  font-size: 14px;
+`;
+
+const ImageButton = styled.button`
+  display: flex;
+  border: transparent;
+  border-radius: 10px;
+`;
+
+const MoodBoardTablet = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid green;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MoodboardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  border: 1px solid red;
+  align-items: center;
+  justify-content: center;
+`;
+const MoodboardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid green;
+  align-items: center;
+  justify-content: center;
+`;
+const ImageStyled = styled.img`
+  width: 130px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+`;
+
+const DeleteButton = styled.button`
+  display: flex;
+  width: fit-content;
+  background-color: rgba(221, 133, 96, 1);
+  padding: 10px;
+  margin-top: 20px;
+  border: transparent;
+  border-radius: 10px;
+  color: whitesmoke;
+  font-family: "Righteous", cursive;
+  font-size: 14px;
 `;

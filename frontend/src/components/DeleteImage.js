@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaTrashAlt } from "react-icons/fa";
+import { FaBeer } from "react-icons/fa";
 import image from "../reducers/image";
 
 const DeleteImage = ({ imageId }) => {
@@ -42,9 +44,11 @@ const DeleteImage = ({ imageId }) => {
 
   return (
     <div>
+      {" "}
       <button key={imageId} value={imageDelete} onClick={onDeleteImage}>
-        Hello delete
-      </button>
+        {" "}
+        <FaTrashAlt style={{ height: 20, width: 20, color: "white" }} />
+      </button>{" "}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 import DeleteImage from "./DeleteImage";
+import styled from "styled-components";
 
 import image from "../reducers/image";
 
@@ -56,7 +57,7 @@ const MyWardrobe = () => {
   const buttonCategory = [
     "dresses",
     "tops",
-    "Jackets/Coats",
+    "jackets/coats",
     "sweatshirts",
     "pants",
   ];
@@ -65,37 +66,92 @@ const MyWardrobe = () => {
   };
 
   return (
-    <>
-      <div>
-        <p>Here is my wardrobe </p>
-        <Link to="/MyWardrobe">MyWardrobe</Link>
-        <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
-        <Link to="/Moodboard">Moodboard</Link>
-        <Link to="/Inspiration">Inspiration</Link>
-        <Link to="/profile">ProfilePage</Link>
-      </div>
-      <div>
-        {buttonCategory.map((category) => (
-          <button key={category} value={category} onClick={onCategoryChange}>
-            {category}
-          </button>
-        ))}
-      </div>
+    <Container>
+      <BackgroundImage>
+        <div>
+          <h1>My Wardrobe </h1>
+          <Link to="/MyWardrobe">MyWardrobe</Link>
 
-      <div>
-        {categoryClothes.map(({ id, category, imageUrl }) => (
-          <div key={id}>
-            <img src={imageUrl} alt={category} />
-            <DeleteImage imageId={id} />
-          </div>
-        ))}
-      </div>
+          <Link to="/Moodboard">Moodboard</Link>
 
-      <div>
-        <Link to="/uploadImage">Upload new image</Link>
-      </div>
-    </>
+          <Link to="/profile">ProfilePage</Link>
+        </div>
+        <ButtonContainer>
+          {buttonCategory.map((category) => (
+            <StyledButton
+              key={category}
+              value={category}
+              onClick={onCategoryChange}
+            >
+              {category}
+            </StyledButton>
+          ))}
+        </ButtonContainer>
+
+        <div>
+          {categoryClothes.map(({ id, category, imageUrl }) => (
+            <div key={id}>
+              <StyledImage src={imageUrl} alt={category} />
+              <DeleteImage imageId={id} />
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <Link to="/uploadImage">Upload new image</Link>
+        </div>
+      </BackgroundImage>
+    </Container>
   );
 };
 
 export default MyWardrobe;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #747373;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const BackgroundImage = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-image: url("./assets/empty.wardrobe.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 110vh;
+  object-fit: cover;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  background-color: rgba(221, 133, 96, 1);
+  padding: 5px;
+  margin-top: 20px;
+  border: transparent;
+  border-radius: 10px;
+  color: black;
+  font-family: "Righteous", cursive;
+  font-size: 14px;
+`;
+
+const StyledImage = styled.img`
+  width: 80%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+`;

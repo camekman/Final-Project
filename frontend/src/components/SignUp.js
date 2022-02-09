@@ -67,6 +67,7 @@ const Signup = () => {
   return (
     <BackgroundImage>
       <LoginContainer>
+        <Logo>SUSTA</Logo>
         <LoginSection>
           <form onSubmit={onFormSubmit}>
             <StyledFieldset>
@@ -144,11 +145,18 @@ const BackgroundImage = styled.main`
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 110vh;
+  height: 100vh;
   padding-top: 10px;
   padding-bottom: 20px;
   align-items: center;
   justify-content: center;
+`;
+
+const Logo = styled.h3`
+  font-size: 100px;
+  margin-top: 135px;
+  color: darkblue;
+  margin-bottom: 25px;
 `;
 
 const LoginSection = styled.div`

@@ -71,6 +71,11 @@ const ProfilePage = () => {
       });
   };
 
+  const linkStyle = {
+    textDecoration: "none",
+    color: "whitesmoke",
+  };
+
   return (
     <ProfileContainer>
       <h1>Welcome to your Profile!</h1>
@@ -101,19 +106,19 @@ const ProfilePage = () => {
       </ProfileWrapper>
       <ContentSection>
         <ContentWrapper>
-          <LinkStyled to="/MyWardrobe">MyWardrobe</LinkStyled>
+          <Link to="/MyWardrobe" style={linkStyle}>
+            MyWardrobe
+          </Link>
         </ContentWrapper>
         <ContentWrapper>
-          <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
+          <Link to="/Moodboard" style={linkStyle}>
+            Moodboard
+          </Link>
         </ContentWrapper>
         <ContentWrapper>
-          <Link to="/Moodboard">Moodboard</Link>
-        </ContentWrapper>
-        <ContentWrapper>
-          <Link to="/Inspiration">Inspiration</Link>
-        </ContentWrapper>
-        <ContentWrapper>
-          <Link to="/uploadImage">Upload new image</Link>
+          <Link to="/uploadImage" style={linkStyle}>
+            Upload new image
+          </Link>
         </ContentWrapper>
       </ContentSection>
       <div>
@@ -174,19 +179,21 @@ const ContentSection = styled.div`
   border: 2px solid black;
   align-content: center;
   justify-content: center;
+  padding: 10px;
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
+  height: 30px;
   background-color: rgba(221, 133, 96, 1);
-  border-radius: 20px;
+  border-radius: 30px;
   padding: 20px;
-  margin: 10px;
+  margin: 20px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 `;
 
-const LinkStyled = styled.Link`
-  color: whitesmoke;
-`;
 const SignOutButton = styled.button`
   display: flex;
   background-color: rgba(221, 133, 96, 1);
@@ -196,5 +203,5 @@ const SignOutButton = styled.button`
   border-radius: 10px;
   color: whitesmoke;
   font-family: "Righteous", cursive;
-  font-size: 16px;
+  font-size: 14px;
 `;

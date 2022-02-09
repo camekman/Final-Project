@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaHouseUser } from "react-icons/fa";
 // import { library } from "@fortawesome/fontawesome-svg-core";
 
 import { API_URL } from "../utils/urls";
@@ -107,11 +107,7 @@ const Login = () => {
           </form>
         </LoginSection>
         <Link to="/">
-          <FontAwesomeIcon
-            icon="fa-solid fa-house"
-            style={{ height: 20, width: 20, color: "white" }}
-          />
-          Home
+          <FaHouseUser style={{ height: 45, width: 45, color: "white" }} />
         </Link>
       </LoginContainer>
     </BackgroundImage>
