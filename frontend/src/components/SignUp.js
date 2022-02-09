@@ -122,7 +122,7 @@ export default Signup;
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: lightskyblue;
+  /* background-color: lightskyblue; */
   padding-top: 10px;
   padding-bottom: 20px;
   align-items: center;

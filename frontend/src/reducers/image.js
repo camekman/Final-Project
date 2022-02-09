@@ -18,10 +18,6 @@ const image = createSlice({
     setId: (store, action) => {
       store.images.id(action.payload);
     },
-    // addCategory: (store, action) => {
-    //   store.images.category(action.payload);
-    // },
-
     addCategory: (store, action) => {
       store.images.push(action.payload);
     },
@@ -44,21 +40,3 @@ const image = createSlice({
 });
 
 export default image;
-
-// deleteTodo: (store, action) => {
-//   const decreasedItems = store.items.filter(
-//     (item) => item.id !== action.payload
-//   );
-//   store.items = decreasedItems;
-// },
-
-// addItem: (state, action) => {
-//   const existingProducts = state.items.find(
-//     (item) => item.id === action.payload.id
-//   );
-//   if (existingProducts) {
-//     existingProducts.quantity += 1;
-//   } else {
-//     state.items.push({ ...action.payload, quantity: 1 });
-//   }
-// },

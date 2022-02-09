@@ -9,7 +9,7 @@ const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
-  // const id = useSelector((store) => store.image.images.id);
+
   console.log(images);
 
   const [category, setCategory] = useState("");
@@ -21,15 +21,6 @@ const MyWardrobe = () => {
   const categoryClothes = images.filter((item) => item.category === category);
   console.log(categoryClothes);
 
-  //   let selectedCategory = useSelector((store) =>
-  //   store.image.images.filter((item) => item.category)
-  // );
-
-  // const categoryClothes = selectedCategory.filter(
-  //   (item) => item.category === category
-  // );
-
-  // console.log(selectedImages);
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -133,10 +124,6 @@ const MyWardrobe = () => {
   );
 };
 
-// {products.map((product) => (
-//   <CartItem key={product.id} product={product} />
-// ))}
-
 export default MyWardrobe;
 
 const Container = styled.div`
@@ -168,67 +155,3 @@ const Image = styled.img`
   width: 100px;
   height: auto;
 `;
-
-// const Moodboard = () => {
-//   var draggable = ".draggable";
-//   var resizable = ".resizeable";
-//   var element = "element";
-
-//   element.each(setRandomSize);
-//   element.each(setRandomPosition);
-
-//   resizable.resizable({
-//     containment: "#background",
-//     aspectRatio: true,
-//     handles: "n, w, s, e",
-//   });
-
-//   draggable.draggable({
-//     cursor: "move",
-//     containment: "#background",
-//     stack: ".element",
-//   });
-//   if (window.innerHeight > window.innerWidth) {
-//   }
-
-//   function setRandomSize() {
-//     //Get IMG size
-//     var img = this.find("img");
-//     var imgHeight = img.outerHeight();
-//     var imgWidth = img.outerWidth();
-
-//     if (window.innerHeight > window.innerWidth) {
-//       //Generate random Width % [10, 60]
-//       var randomWidth = randomIntFromInterval(10, 60);
-//       this.css({
-//         width: randomWidth + "%",
-//       });
-//     } else {
-//       //Change Height to [100, 330] randomly
-//       var randomHeight = randomIntFromInterval(100, 330);
-//       //Calc proportional width
-//       var proportionalWidth = (imgWidth * randomHeight) / imgHeight;
-//       this.css({
-//         height: randomHeight + "px",
-//         width: proportionalWidth + "px",
-//       });
-//     }
-//   }
-
-//   function setRandomPosition() {
-//     //Generate random Top % [0, 75]
-//     var randomTop = randomIntFromInterval(0, 75);
-//     //Generate randon Left % [0, 85]
-//     var randomLeft = randomIntFromInterval(0, 75);
-//     this.css({
-//       top: randomTop + "%",
-//       left: randomLeft + "%",
-//     });
-//   }
-
-//   function randomIntFromInterval(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1) + min);
-//   }
-// };
-
-// export default Moodboard;
