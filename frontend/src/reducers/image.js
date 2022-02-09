@@ -18,8 +18,12 @@ const image = createSlice({
     setId: (store, action) => {
       store.images.id(action.payload);
     },
+    // addCategory: (store, action) => {
+    //   store.images.category(action.payload);
+    // },
+
     addCategory: (store, action) => {
-      store.images.category(action.payload);
+      store.images.push(action.payload);
     },
     deleteImage: (store, action) => {
       store.images = store.images.filter(

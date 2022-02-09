@@ -9,6 +9,7 @@ const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
+  // const id = useSelector((store) => store.image.images.id);
   console.log(images);
 
   const [category, setCategory] = useState("");
@@ -17,15 +18,18 @@ const MyWardrobe = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  let selectedCategory = useSelector((store) =>
-    store.image.images.filter((item) => item.category)
-  );
+  const categoryClothes = images.filter((item) => item.category === category);
+  console.log(categoryClothes);
 
-  const categoryClothes = selectedCategory.filter(
-    (item) => item.category === category
-  );
+  //   let selectedCategory = useSelector((store) =>
+  //   store.image.images.filter((item) => item.category)
+  // );
 
-console.log(selectedImages);
+  // const categoryClothes = selectedCategory.filter(
+  //   (item) => item.category === category
+  // );
+
+  // console.log(selectedImages);
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -68,16 +72,8 @@ console.log(selectedImages);
     setCategory(event.target.value);
   };
 
-  const onSelectImage = (event) => {
-    if (!selectedImages.find(({id}) => event.target.dataset.id)) {
-      setSelectedImages([
-        ...selectedImages,
-        {
-          id: event.target.dataset.id,
-          imageUrl: event.target.src
-        }
-      ]);
-    }
+  const onSelectImage = (item) => {
+    setSelectedImages([...selectedImages, item]);
   };
 
   const onDeleteMoodboard = () => {
@@ -110,7 +106,10 @@ console.log(selectedImages);
             </div>
 
             {categoryClothes.map(({ id, category, imageUrl }) => (
-              <button key={category} onClick={onSelectImage}>
+              <button
+                key={id}
+                onClick={() => onSelectImage({ id, category, imageUrl })}
+              >
                 <div key={id}>
                   <Image src={imageUrl} data-id={id} alt={category} />
                 </div>
@@ -119,10 +118,11 @@ console.log(selectedImages);
           </ImageContainer>
 
           <MoodBoardTablet>
-
             This is your mood-tablet onSelect
-          {selectedImages.map(({ imageUrl }) => <Image src={imageUrl} alt="" />)}
-          <button onClick={onDeleteMoodboard} > DELETE</button>
+            {selectedImages.map(({ imageUrl }) => (
+              <Image src={imageUrl} alt="" />
+            ))}
+            <button onClick={onDeleteMoodboard}> DELETE</button>
           </MoodBoardTablet>
         </Wrapper>
         <div>
