@@ -74,36 +74,50 @@ const ProfilePage = () => {
   return (
     <ProfileContainer>
       <h1>Welcome to your Profile!</h1>
-
-      <form onSubmit={handleFormSubmit}>
-        <input type="file" ref={fileInput} />
-        <ProfilePicture>
-          <button type="submit">Continue</button>
-        </ProfilePicture>
-      </form>
+      <UploadImageSection>
+        <form onSubmit={handleFormSubmit}>
+          <input type="file" ref={fileInput} />
+          <ButtonDiv>
+            <button type="submit">Continue</button>
+          </ButtonDiv>
+        </form>
+      </UploadImageSection>
+      <ProfileWrapper>
+        <ProfilePictureSection>
+          <img
+            style={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "50%",
+            }}
+            src={profileImage}
+            alt="ProfilePicture"
+          />
+        </ProfilePictureSection>
+        <ProfileInfo>
+          <p>Name: {name}</p>
+          <p>Username: {username}</p>
+        </ProfileInfo>
+      </ProfileWrapper>
+      <ContentSection>
+        <ContentWrapper>
+          <LinkStyled to="/MyWardrobe">MyWardrobe</LinkStyled>
+        </ContentWrapper>
+        <ContentWrapper>
+          <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
+        </ContentWrapper>
+        <ContentWrapper>
+          <Link to="/Moodboard">Moodboard</Link>
+        </ContentWrapper>
+        <ContentWrapper>
+          <Link to="/Inspiration">Inspiration</Link>
+        </ContentWrapper>
+        <ContentWrapper>
+          <Link to="/uploadImage">Upload new image</Link>
+        </ContentWrapper>
+      </ContentSection>
       <div>
-        <img
-          style={{
-            width: "200px",
-            height: "200px",
-            borderRadius: "50%",
-          }}
-          src={profileImage}
-          alt="ProfilePicture"
-        />
-      </div>
-      <Link to="/MyWardrobe">MyWardrobe</Link>
-      <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
-      <Link to="/Moodboard">Moodboard</Link>
-      <Link to="/Inspiration">Inspiration</Link>
-
-      <ProfileInfo>
-        <p>Name: {name}</p>
-        <p>Username: {username}</p>
-      </ProfileInfo>
-      <Link to="/uploadImage">Upload new image</Link>
-      <div>
-        <button onClick={handleRestart}>sign out</button>
+        <SignOutButton onClick={handleRestart}>Sign out</SignOutButton>
       </div>
     </ProfileContainer>
   );
@@ -114,25 +128,73 @@ export default ProfilePage;
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: lightskyblue;
+  border: 3px solid black;
   align-items: center;
   text-align: center;
   padding-bottom: 20px;
 `;
 
-const ProfilePicture = styled.div`
-  width: 100px;
-  height: 100px;
+const UploadImageSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid blue;
+  align-items: center;
+  text-align: center;
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  border: 2px solid red;
   text-align: center;
   align-items: center;
   justify-content: center;
 `;
 
+const ProfilePictureSection = styled.div`
+  display: flex;
+  border: 2px solid green;
+`;
+
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: pink;
-  padding: 30px;
-  margin: 20px;
-  border-radius: 15px;
+  border: 2px solid blue;
+  justify-content: center;
+  margin: 10px;
+`;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  border: 2px solid red;
+`;
+
+const ContentSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid black;
+  align-content: center;
+  justify-content: center;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  background-color: rgba(221, 133, 96, 1);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+`;
+
+const LinkStyled = styled.Link`
+  color: whitesmoke;
+`;
+const SignOutButton = styled.button`
+  display: flex;
+  background-color: rgba(221, 133, 96, 1);
+  padding: 10px;
+  margin-top: 20px;
+  border: transparent;
+  border-radius: 10px;
+  color: whitesmoke;
+  font-family: "Righteous", cursive;
+  font-size: 16px;
 `;

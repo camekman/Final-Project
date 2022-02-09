@@ -93,7 +93,7 @@ const Login = () => {
 
             <ButtonContainer>
               <RadioButtonContainer>
-                <label htmlFor="signin">Signin</label>
+                <label htmlFor="signin">Sign in</label>
                 <input
                   id="signin"
                   type="radio"
@@ -135,7 +135,6 @@ const BackgroundImage = styled.main`
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   height: 110vh;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -153,33 +152,7 @@ const LoginSection = styled.div`
   margin: 20px;
   border-radius: 30px;
   color: black;
-`;
-
-const RadioButtonContainer = styled.div`
-  background-color: rgba(221, 133, 96, 1);
-  display: flex;
-  flex-direction: row;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 10px;
-  color: black;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-`;
-
-const SubmitButton = styled.button`
-  background-color: rgba(221, 133, 96, 1);
-  display: flex;
-  flex-direction: row;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 10px;
-  color: white;
-  font-family: "Righteous", cursive;
+  font-size: 20px;
 `;
 
 const StyledFieldset = styled.fieldset`
@@ -199,6 +172,38 @@ const StyledInputField = styled.input`
   height: 100%;
   border: none transparent;
   outline: none;
+  border-radius: 30px;
   font-size: 20px;
   background-color: transparent;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+`;
+
+const RadioButtonContainer = styled.div`
+  background-color: rgba(221, 133, 96, 1);
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: black;
+  font-size: 16px;
+  margin-right: 30px;
+`;
+
+const SubmitButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(221, 133, 96, 1);
+  padding: 15px;
+  margin-top: 20px;
+  border: transparent;
+  border-radius: 10px;
+  color: black;
+  font-family: "Righteous", cursive;
+  font-size: 16px;
 `;
