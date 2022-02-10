@@ -16,16 +16,19 @@ import Inspiration from "./components/Inspiration";
 import MyWardrobe from "./components/MyWardrobe";
 import MyFleeMarketWardrobe from "./components/MyFleeMarketWardorbe";
 import Moodboard from "./components/Moodboard";
+// import Loader from "./components/Loader";
 // import DeleteImage from "./components/DeleteImage";
 
 import user from "./reducers/user";
 import image from "./reducers/image";
 import profileImage from "./reducers/profileImage";
+// import ui from "./reducers/ui";
 
 const reducer = combineReducers({
   user: user.reducer,
   image: image.reducer,
   profileImage: profileImage.reducer,
+  // ui: ui.reducer,
 });
 
 const store = configureStore({ reducer });
@@ -35,6 +38,7 @@ export const App = () => {
     <>
       {/* <Header /> */}
       <Provider store={store}>
+        {/* <Loader /> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />

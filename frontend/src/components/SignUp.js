@@ -6,6 +6,7 @@ import { FaHouseUser } from "react-icons/fa";
 import styled from "styled-components";
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
+// import ui from "../reducers/ui";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -51,6 +52,7 @@ const Signup = () => {
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setError(null));
+            // dispatch(ui.actions.setLoading(true));
           });
         } else {
           batch(() => {
@@ -64,6 +66,7 @@ const Signup = () => {
           });
         }
       });
+    // .finally(() => dispatch(ui.actions.setLoading(false)));
   };
 
   return (
@@ -161,6 +164,14 @@ const Logo = styled.h3`
   margin-top: 135px;
   color: darkblue;
   margin-bottom: 25px;
+  @media (min-width: 768px) {
+    font-size: 135px;
+    margin-top: 0;
+  }
+  @media (min-width: 1024px) {
+    font-size: 100px;
+    margin-top: 50px;
+  }
 `;
 
 const LoginSection = styled.div`
@@ -174,6 +185,14 @@ const LoginSection = styled.div`
   border-radius: 30px;
   color: rgb(77, 77, 77);
   font-size: 20px;
+  @media (min-width: 768px) {
+    padding: 60px;
+    font-size: 22px;
+  }
+  @media (min-width: 1024px) {
+    width: 400px;
+    padding: 40px;
+  }
 `;
 const StyledFieldset = styled.fieldset`
   border: 3px solid rgba(221, 133, 96, 1);
@@ -207,12 +226,19 @@ const RadioButtonContainer = styled.div`
   color: rgb(77, 77, 77);
   font-size: 16px;
   margin-right: 30px;
+  @media (min-width: 768px) {
+    font-size: 22px;
+    align-items: center;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
   justify-content: center;
+  @media (min-width: 768px) {
+    gap: 50px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -225,4 +251,7 @@ const SubmitButton = styled.button`
   color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 `;

@@ -106,12 +106,12 @@ const ProfilePage = () => {
           </ThemeProvider>
 
           <ProfilePictureSection>
-            <img
-              style={{
-                width: "150px",
-                height: "150px",
-                borderRadius: "50%",
-              }}
+            <ProfileImage
+              // style={{
+              //   width: "150px",
+              //   height: "150px",
+              //   borderRadius: "50%",
+              // }}
               src={profileImage}
               alt="ProfilePicture"
             />
@@ -184,8 +184,25 @@ const ProfilePage = () => {
 
 export default ProfilePage;
 
+// const FaTwitter = styled.img`
+//   height: 25;
+//   width: 25;
+//   color: "rgb(77, 77, 77)";
+// `;
+const ProfileImage = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  @media (min-width: 768px) {
+    margin-top: 30px;
+    width: 250px;
+    height: 250px;
+  }
+`;
+
 const BackgroundImage = styled.main`
   display: flex;
+  background-size: cover;
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -194,6 +211,14 @@ const BackgroundImage = styled.main`
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  @media (min-width: 768px) {
+    width: 100vh;
+    height: 120vh;
+  }
+  @media (min-width: 1024px) {
+    width: 200vh;
+    height: 200vh;
+  }
 `;
 
 const ProfileContainer = styled.div`

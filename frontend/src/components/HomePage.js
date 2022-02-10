@@ -86,13 +86,19 @@ const Logo = styled.h3`
   margin-top: 135px;
   color: darkblue;
   margin-bottom: 0px;
+  @media (min-width: 768px) {
+    font-size: 150px;
+  }
 `;
 
 const IconStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 60px;
+  @media (min-width: 768px) {
+    margin-top: 150px;
+  }
 `;
 
 const HomePageContainer = styled.main`
@@ -102,11 +108,11 @@ const HomePageContainer = styled.main`
   align-items: center;
   align-self: center;
   justify-content: center;
-  position: absolute;
+  margin-top: 50px;
   bottom: 5px;
   width: 80%;
-  @media (min-width: 992px) {
-    width: auto;
+  @media (min-width: 768px) {
+    margin-top: 100px;
   }
 `;
 
@@ -118,7 +124,15 @@ const ContentContainer = styled.div`
   color: whitesmoke;
   align-items: center;
   justify-content: center;
-  width: 35%;
+  width: 100px;
   padding: 5px;
   margin: 10px;
+  @media (min-width: 768px) {
+    font-size: 22px;
+  }
+  @media (min-width: 1024px) {
+    width: 150px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
 `;

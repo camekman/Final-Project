@@ -110,14 +110,14 @@ const MyWardrobe = () => {
           ))}
         </ButtonContainer>
 
-        <div>
+        <ImageContainer>
           {categoryClothes.map(({ id, category, imageUrl }) => (
-            <div key={id}>
+            <StyledImageSection key={id}>
               <StyledImage src={imageUrl} alt={category} />
               <DeleteImage imageId={id} />
-            </div>
+            </StyledImageSection>
           ))}
-        </div>
+        </ImageContainer>
       </BackgroundImage>
     </Container>
   );
@@ -137,6 +137,7 @@ const Container = styled.div`
 const BackgroundImage = styled.main`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   background-image: url("./assets/empty.wardrobe.jpeg");
   background-position: center;
@@ -144,17 +145,34 @@ const BackgroundImage = styled.main`
   background-size: cover;
   height: 120vh;
   object-fit: cover;
+  @media (min-width: 768px) {
+    width: 80vh;
+    height: 120vh;
+  }
+  @media (min-width: 1024px) {
+    width: 100vh;
+    height: 120vh;
+  }
 `;
 
 const TextHeader = styled.h1`
   padding-top: 15px;
+  @media (min-width: 768px) {
+    padding-top: 30px;
+  }
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   justify-content: space-evenly;
   margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    padding: 20px;
+    justify-content: space-evenly;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -167,6 +185,42 @@ const StyledButton = styled.button`
   color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 14px;
+  margin-right: 3px;
+  margin-left: 3px;
+  @media (min-width: 768px) {
+    font-size: 20px;
+    padding: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const StyledImageSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;
 
 const StyledImage = styled.img`
@@ -175,4 +229,14 @@ const StyledImage = styled.img`
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
+  @media (min-width: 768px) {
+    width: 450px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  @media (min-width: 1024px) {
+    width: 200px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
 `;

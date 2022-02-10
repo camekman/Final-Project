@@ -149,6 +149,14 @@ const LoginSection = styled.div`
   border-radius: 30px;
   color: rgb(77, 77, 77);
   font-size: 20px;
+  @media (min-width: 768px) {
+    padding: 60px;
+    font-size: 22px;
+  }
+  @media (min-width: 1024px) {
+    width: 400px;
+    padding: 40px;
+  }
 `;
 
 const StyledFieldset = styled.fieldset`
@@ -189,6 +197,10 @@ const RadioButtonContainer = styled.div`
   color: rgb(77, 77, 77);
   font-size: 16px;
   margin-right: 30px;
+  @media (min-width: 768px) {
+    font-size: 22px;
+    align-items: center;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -202,4 +214,7 @@ const SubmitButton = styled.button`
   color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 `;

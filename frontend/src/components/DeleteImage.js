@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaTrashAlt } from "react-icons/fa";
-import { FaBeer } from "react-icons/fa";
+
 import image from "../reducers/image";
 
 const DeleteImage = ({ imageId }) => {

@@ -73,7 +73,6 @@ const MagasinHolder = styled.div`
   display: flex;
   flex-wrap: wrap;
   border-radius: 30px;
-
   padding: 10px;
   margin-right: 5px;
   margin-left: 5px;
@@ -81,6 +80,9 @@ const MagasinHolder = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const ImageWrapper1 = styled.div`
@@ -96,6 +98,16 @@ const ImageWrapper1 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 35%;
+  }
+
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+  }
 `;
 const ImageWrapper2 = styled.div`
   display: flex;
@@ -110,6 +122,15 @@ const ImageWrapper2 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 35%;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+  }
 `;
 const ImageWrapper3 = styled.div`
   display: flex;
@@ -124,6 +145,15 @@ const ImageWrapper3 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 35%;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+  }
 `;
 const ImageWrapper4 = styled.div`
   display: flex;
@@ -138,6 +168,16 @@ const ImageWrapper4 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 35%;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+    flex-direction: row;
+  }
 `;
 const ImageWrapper5 = styled.div`
   display: flex;
@@ -152,6 +192,17 @@ const ImageWrapper5 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 35%;
+    flex-direction: row;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+    flex-direction: row;
+  }
 `;
 const ImageWrapper6 = styled.div`
   display: flex;
@@ -166,6 +217,29 @@ const ImageWrapper6 = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
+  flex-wrap: wrap;
+  @media (min-width: 768px) {
+    height: 60%;
+    width: 23%;
+    flex-direction: row;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+    flex-direction: row;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+  }
+  @media (min-width: 1024px) {
+    height: 60%;
+    width: 23%;
+    flex: 1 0 21%;
+    flex-direction: row;
+  }
 `;
 
 export default Magasin;
