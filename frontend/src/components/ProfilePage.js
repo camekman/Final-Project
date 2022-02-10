@@ -184,11 +184,6 @@ const ProfilePage = () => {
 
 export default ProfilePage;
 
-// const FaTwitter = styled.img`
-//   height: 25;
-//   width: 25;
-//   color: "rgb(77, 77, 77)";
-// `;
 const ProfileImage = styled.img`
   width: 150px;
   height: 150px;

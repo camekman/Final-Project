@@ -113,17 +113,18 @@ const MyWardrobe = () => {
                 </StyledButton>
               ))}
             </ButtonContainer>
-
-            {categoryClothes.map(({ id, category, imageUrl }) => (
-              <ImageButton
-                key={id}
-                onClick={() => onSelectImage({ id, category, imageUrl })}
-              >
-                <div key={id}>
-                  <Image src={imageUrl} data-id={id} alt={category} />
-                </div>
-              </ImageButton>
-            ))}
+            <ImageSection>
+              {categoryClothes.map(({ id, category, imageUrl }) => (
+                <ImageButton
+                  key={id}
+                  onClick={() => onSelectImage({ id, category, imageUrl })}
+                >
+                  <div key={id}>
+                    <Image src={imageUrl} data-id={id} alt={category} />
+                  </div>
+                </ImageButton>
+              ))}
+            </ImageSection>
           </ImageContainer>
 
           <MoodBoardTablet>
@@ -151,7 +152,7 @@ const BackgroundImage = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 130vh;
+  height: 200vh;
   background-image: url("./assets/background.image.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -160,10 +161,22 @@ const BackgroundImage = styled.main`
   align-items: center;
   text-align: center;
   padding-bottom: 20px;
+  @media (min-width: 768px) {
+    width: 70vh;
+    height: 120vh;
+  }
+  @media (min-width: 1024px) {
+    width: 170vh;
+    height: 120vh;
+  }
 `;
 
 const StyledText = styled.h1`
   margin-top: 0;
+  @media (min-width: 768px) {
+    font-size: 36px;
+    margin-top: 5px;
+  }
 `;
 const Container = styled.div`
   margin-top: 40px;
@@ -172,22 +185,35 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   justify-content: center;
+  border: 1px solid red;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
+  border: 3px solid red;
 `;
 const ImageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-
   justify-content: center;
   align-items: center;
+  border: 3px solid red;
+  @media (min-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const ImageSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  @media (min-width: 768px) {
+    display: flex;
+    border: 3px solid black;
+  }
 `;
 
 const Image = styled.img`
@@ -235,6 +261,12 @@ const MoodBoardTablet = styled.div`
   margin-left: 10px;
   padding-top: 5px;
   padding-bottom: 10px;
+  @media (min-width: 768px) {
+    margin-right: 5px;
+    margin-left: 5px;
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;
 
 const MoodboardContainer = styled.div`
@@ -257,6 +289,12 @@ const ImageStyled = styled.img`
   margin-top: 10px;
   margin-right: 5px;
   margin-left: 5px;
+  @media (min-width: 768px) {
+    width: 150px;
+  }
+  @media (min-width: 1024px) {
+    width: 200px;
+  }
 `;
 
 const DeleteButton = styled.button`
