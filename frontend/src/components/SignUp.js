@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { FaHouseUser } from "react-icons/fa";
+
 import styled from "styled-components";
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
@@ -122,7 +124,9 @@ const Signup = () => {
             {errorMessage !== null && <p>{error.message}</p>}
           </form>
         </LoginSection>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <FaHouseUser style={{ height: 45, width: 45, color: "black" }} />
+        </Link>
       </LoginContainer>
     </BackgroundImage>
   );

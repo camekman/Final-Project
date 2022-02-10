@@ -1,13 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { useOnClickOutside } from "./hooks";
+import GlobalStyles from "./global";
 
+import { theme } from "./theme";
 import user from "../reducers/user";
 
+import Magasin from "./Magasin";
+import HamburgerMenu from "./HamburgerMenu";
+import Menu from "./Menu";
+import FocusLock from "react-focus-lock";
 import { API_URL } from "../utils/urls";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const ProfilePage = () => {
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+
   const fileInput = useRef();
   const [profileImage, setProfileImage] = useState("");
 
@@ -76,107 +88,206 @@ const ProfilePage = () => {
     color: "whitesmoke",
   };
 
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
-    <ProfileContainer>
-      <h1>Welcome to your Profile!</h1>
-      <UploadImageSection>
-        <form onSubmit={handleFormSubmit}>
-          <input type="file" ref={fileInput} />
-          <ButtonDiv>
-            <button type="submit">Continue</button>
-          </ButtonDiv>
-        </form>
-      </UploadImageSection>
-      <ProfileWrapper>
-        <ProfilePictureSection>
-          <img
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-            }}
-            src={profileImage}
-            alt="ProfilePicture"
-          />
-        </ProfilePictureSection>
-        <ProfileInfo>
-          <p>Name: {name}</p>
-          <p>Username: {username}</p>
-        </ProfileInfo>
-      </ProfileWrapper>
-      <ContentSection>
-        <ContentWrapper>
-          <Link to="/MyWardrobe" style={linkStyle}>
-            MyWardrobe
-          </Link>
-        </ContentWrapper>
-        <ContentWrapper>
-          <Link to="/Moodboard" style={linkStyle}>
-            Moodboard
-          </Link>
-        </ContentWrapper>
-        <ContentWrapper>
-          <Link to="/uploadImage" style={linkStyle}>
-            Upload new image
-          </Link>
-        </ContentWrapper>
-      </ContentSection>
+    <BackgroundImage>
+      <ProfileContainer>
+        <ProfileWrapper>
+          <ThemeProvider theme={theme}>
+            <>
+              <GlobalStyles />
+              <div ref={node}>
+                <FocusLock disabled={!open}>
+                  <HamburgerMenu
+                    open={open}
+                    setOpen={setOpen}
+                    aria-controls={menuId}
+                  />
+                  <Menu open={open} setOpen={setOpen} id={menuId} />
+                </FocusLock>
+              </div>
+            </>
+          </ThemeProvider>
+
+          <ProfilePictureSection>
+            <img
+              style={{
+                width: "150px",
+                height: "150px",
+                borderRadius: "50%",
+              }}
+              src={profileImage}
+              alt="ProfilePicture"
+            />
+            <UploadImageSection>
+              <form onSubmit={handleFormSubmit}>
+                <input
+                  type="file"
+                  ref={fileInput}
+                  style={{ display: "none" }}
+                />
+                <UploadButton onClick={() => fileInput.current.click()}>
+                  <span className="plus-sign" role="img" aria-label="plus-sign">
+                    ➕
+                  </span>
+                </UploadButton>
+                <ButtonDiv>
+                  <SubmitButton type="submit">Upload</SubmitButton>
+                </ButtonDiv>
+              </form>
+            </UploadImageSection>
+          </ProfilePictureSection>
+          <ProfileInfo>
+            <NameText>Name: {name}</NameText>
+            <NameText>Username: {username}</NameText>
+            <IconsWrapper>
+              <a href="https://sv-se.facebook.com/">
+                <FaFacebook
+                  icon="fa-brands fa-facebook"
+                  style={{ height: 25, width: 25, color: "black" }}
+                />
+              </a>
+              <a href="https://www.instagram.com/">
+                <FaInstagram
+                  icon="fa-brands fa-instagram"
+                  style={{ height: 25, width: 25, color: "black" }}
+                />
+              </a>
+              <a href="https://twitter.com/">
+                <FaTwitter
+                  icon="fa-brands fa-twitter"
+                  style={{ height: 25, width: 25, color: "black" }}
+                />
+              </a>
+            </IconsWrapper>
+          </ProfileInfo>
+        </ProfileWrapper>
+
+        <ContentSection>
+          <ContentWrapper>
+            <Link to="/MyWardrobe" style={linkStyle}>
+              MyWardrobe
+            </Link>
+          </ContentWrapper>
+          <ContentWrapper>
+            <Link to="/Moodboard" style={linkStyle}>
+              Moodboard
+            </Link>
+          </ContentWrapper>
+          <ContentWrapper>
+            <Link to="/uploadImage" style={linkStyle}>
+              Upload new image
+            </Link>
+          </ContentWrapper>
+        </ContentSection>
+
+        <Magasin />
+      </ProfileContainer>
       <div>
         <SignOutButton onClick={handleRestart}>Sign out</SignOutButton>
       </div>
-    </ProfileContainer>
+    </BackgroundImage>
   );
 };
 
 export default ProfilePage;
 
-const ProfileContainer = styled.div`
+const BackgroundImage = styled.main`
+  border: 3px solid red;
   display: flex;
   flex-direction: column;
-  border: 3px solid black;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/background.image.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+`;
+
+const ProfileContainer = styled.div`
+  border: 3px solid green;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   padding-bottom: 20px;
 `;
 
+const ProfileWrapper = styled.div`
+  display: flex;
+  margin-top: 30px;
+  flex-direction: column;
+`;
+
 const UploadImageSection = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
-  border: 1px solid blue;
+  margin-top: -90px;
+  margin-left: 120px;
   align-items: center;
   text-align: center;
 `;
 
+const UploadButton = styled.button`
+  display: flex;
+  background-color: whitesmoke;
+  padding-top: 5px;
+  padding-right: 7px;
+  padding-bottom: 5px;
+  border-radius: 20px;
+  border: transparent;
+`;
+
 const ButtonDiv = styled.div`
   display: flex;
-  border: 2px solid red;
   text-align: center;
   align-items: center;
   justify-content: center;
 `;
 
+const SubmitButton = styled.button`
+  display: flex;
+  background-color: transparent;
+  margin-left: 15px;
+  padding: 3px;
+  border: transparent;
+  border-radius: 10px;
+  color: black;
+  font-family: "Righteous", cursive;
+  font-size: 8px;
+`;
+
 const ProfilePictureSection = styled.div`
   display: flex;
-  border: 2px solid green;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  border: 2px solid blue;
   justify-content: center;
   margin: 10px;
+  color: black;
+  font-size: 15px;
 `;
 
-const ProfileWrapper = styled.div`
+const NameText = styled.h3`
+  margin-bottom: 0;
+`;
+
+const IconsWrapper = styled.div`
   display: flex;
-  border: 2px solid red;
+  padding: 10px;
+  justify-content: space-evenly;
+  margin-top: 5px;
 `;
 
 const ContentSection = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  border: 2px solid black;
   align-content: center;
   justify-content: center;
   padding: 10px;
@@ -184,11 +295,12 @@ const ContentSection = styled.div`
 
 const ContentWrapper = styled.div`
   display: flex;
-  height: 30px;
   background-color: rgba(221, 133, 96, 1);
   border-radius: 30px;
-  padding: 20px;
-  margin: 20px;
+  padding: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 12px;
   justify-content: center;
   text-align: center;
   align-items: center;
