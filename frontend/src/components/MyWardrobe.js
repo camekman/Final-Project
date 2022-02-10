@@ -146,11 +146,11 @@ const BackgroundImage = styled.main`
   height: 120vh;
   object-fit: cover;
   @media (min-width: 768px) {
-    width: 80vh;
+    width: 70vh;
     height: 120vh;
   }
   @media (min-width: 1024px) {
-    width: 100vh;
+    width: 120vh;
     height: 120vh;
   }
 `;

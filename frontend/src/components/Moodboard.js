@@ -166,7 +166,7 @@ const BackgroundImage = styled.main`
     height: 120vh;
   }
   @media (min-width: 1024px) {
-    width: 170vh;
+    width: 180vh;
     height: 120vh;
   }
 `;
@@ -185,7 +185,6 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   justify-content: center;
-  border: 1px solid red;
 `;
 
 const Wrapper = styled.div`
@@ -193,7 +192,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 3px solid red;
 `;
 const ImageContainer = styled.div`
   display: flex;
@@ -201,7 +199,7 @@ const ImageContainer = styled.div`
   padding: 10px;
   justify-content: center;
   align-items: center;
-  border: 3px solid red;
+
   @media (min-width: 768px) {
     flex-direction: column;
   }
@@ -212,7 +210,6 @@ const ImageSection = styled.div`
   flex-wrap: wrap;
   @media (min-width: 768px) {
     display: flex;
-    border: 3px solid black;
   }
 `;
 
@@ -262,10 +259,12 @@ const MoodBoardTablet = styled.div`
   padding-top: 5px;
   padding-bottom: 10px;
   @media (min-width: 768px) {
-    margin-right: 5px;
-    margin-left: 5px;
     display: flex;
     flex-wrap: wrap;
+  }
+  @media (min-width: 1024px) {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 `;
 

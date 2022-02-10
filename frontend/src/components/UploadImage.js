@@ -118,11 +118,23 @@ const BackgroundImage = styled.main`
   background-size: cover;
   height: 140vh;
   object-fit: cover;
+  @media (min-width: 768px) {
+    width: 70vh;
+    height: 120vh;
+  }
+  @media (min-width: 1024px) {
+    width: 180vh;
+    height: 120vh;
+  }
 `;
 
 const StyledText = styled.h1`
   font-size: 24px;
   margin-top: 0;
+  @media (min-width: 768px) {
+    font-size: 36px;
+    margin-top: 10px;
+  }
 `;
 
 const UploadContainer = styled.div`
@@ -132,6 +144,9 @@ const UploadContainer = styled.div`
   justify-content: center;
   text-align: center;
   padding: 30px;
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -142,7 +157,9 @@ const StyledForm = styled.form`
   padding: 30px;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  @media (min-width: 768px) {
+    width: 300px;
+  }
 `;
 const StyledSelect = styled.select`
   color: black;
@@ -170,6 +187,9 @@ const UploadButton = styled.button`
   color: whitesmoke;
   font-family: "Righteous", cursive;
   font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 22px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -182,6 +202,9 @@ const SubmitButton = styled.button`
   color: rgba(221, 133, 96, 1);
   font-family: "Righteous", cursive;
   font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const Image = styled.img`
@@ -189,4 +212,7 @@ const Image = styled.img`
   height: auto;
   border-radius: 10px;
   margin-top: 15px;
+  @media (min-width: 768px) {
+    margin-top: 25px;
+  }
 `;
