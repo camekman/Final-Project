@@ -18,23 +18,17 @@ const Menu = ({ open, ...props }) => {
   return (
     <StyledMenu open={open} aria-hidden={!isHidden} {...props}>
       <Link to="/MyWardrobe" tabIndex={tabIndex}>
-        {" "}
         <span aria-hidden="true">👘</span> My Wardrobe
       </Link>
-
       <Link to="/Moodboard" tabIndex={tabIndex}>
-        {" "}
         <span aria-hidden="true">😎</span> Moodboard
       </Link>
       <Link to="/uploadImage" tabIndex={tabIndex}>
-        {" "}
         <span aria-hidden="true">📷</span> Upload here!
       </Link>
       <Link to="/profile" tabIndex={tabIndex}>
-        {" "}
         <span aria-hidden="true">🤡</span> Profile
       </Link>
-
       <div>
         <SignOutButton onClick={handleRestart}>Sign out</SignOutButton>
       </div>
@@ -70,7 +64,7 @@ export const StyledMenu = styled.nav`
     font-size: 20px;
     text-transform: uppercase;
     margin-bottom: 40px;
-    color: ${({ theme }) => theme.primaryDark};
+    color: rgb(77, 77, 77);
     text-decoration: none;
     @media (max-width: ${({ theme }) => theme.mobile}) {
       font-size: 1.5rem;
@@ -88,7 +82,7 @@ const SignOutButton = styled.button`
   margin-top: 20px;
   border: transparent;
   border-radius: 10px;
-  color: whitesmoke;
+  color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 14px;
 `;

@@ -140,19 +140,19 @@ const ProfilePage = () => {
               <a href="https://sv-se.facebook.com/">
                 <FaFacebook
                   icon="fa-brands fa-facebook"
-                  style={{ height: 25, width: 25, color: "black" }}
+                  style={{ height: 25, width: 25, color: "rgb(77, 77, 77)" }}
                 />
               </a>
               <a href="https://www.instagram.com/">
                 <FaInstagram
                   icon="fa-brands fa-instagram"
-                  style={{ height: 25, width: 25, color: "black" }}
+                  style={{ height: 25, width: 25, color: "rgb(77, 77, 77)" }}
                 />
               </a>
               <a href="https://twitter.com/">
                 <FaTwitter
                   icon="fa-brands fa-twitter"
-                  style={{ height: 25, width: 25, color: "black" }}
+                  style={{ height: 25, width: 25, color: "rgb(77, 77, 77)" }}
                 />
               </a>
             </IconsWrapper>
@@ -260,7 +260,7 @@ const ProfileInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 10px;
-  color: black;
+  color: rgb(77, 77, 77);
   font-size: 15px;
 `;
 

@@ -118,10 +118,6 @@ const MyWardrobe = () => {
             </div>
           ))}
         </div>
-
-        <div>
-          <Link to="/uploadImage">Upload new image</Link>
-        </div>
       </BackgroundImage>
     </Container>
   );
@@ -168,7 +164,7 @@ const StyledButton = styled.button`
   margin-top: 20px;
   border: transparent;
   border-radius: 10px;
-  color: black;
+  color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 14px;
 `;

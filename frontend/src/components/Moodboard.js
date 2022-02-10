@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 import styled, { ThemeProvider } from "styled-components";
 import image from "../reducers/image";
-import DeleteImage from "./DeleteImage";
 import { useOnClickOutside } from "./hooks";
 import GlobalStyles from "./global";
 import { theme } from "./theme";
@@ -21,17 +20,13 @@ const MyWardrobe = () => {
   const node = useRef();
   const menuId = "main-menu";
 
-  console.log(images);
-
   const [category, setCategory] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
-  const [selectOneImage, SetSelectOneImage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const categoryClothes = images.filter((item) => item.category === category);
-  console.log(categoryClothes);
 
   useEffect(() => {
     if (!accessToken) {
@@ -82,9 +77,6 @@ const MyWardrobe = () => {
   const onDeleteMoodBoard = () => {
     setSelectedImages([]);
   };
-  const onDeleteOneImage = () => {
-    SetSelectOneImage();
-  };
 
   useOnClickOutside(node, () => setOpen(false));
 
@@ -106,12 +98,8 @@ const MyWardrobe = () => {
             </div>
           </>
         </ThemeProvider>
-        <h1>MOODBOARD</h1>
-        {/* <div>
-          <Link to="/MyWardrobe">MyWardrobe</Link>
-          <Link to="/Moodboard">Moodboard</Link>
-          <Link to="/profile">ProfilePage</Link>
-        </div> */}
+        <StyledText>MOODBOARD</StyledText>
+
         <Wrapper>
           <ImageContainer>
             <ButtonContainer>
@@ -144,9 +132,6 @@ const MyWardrobe = () => {
               {selectedImages.map(({ id, imageUrl }) => (
                 <MoodboardWrapper key={id}>
                   <ImageStyled src={imageUrl} alt="" />
-                  <button onClick={() => onDeleteOneImage({ imageUrl })}>
-                    Delete
-                  </button>
                 </MoodboardWrapper>
               ))}
             </MoodboardContainer>
@@ -155,9 +140,6 @@ const MyWardrobe = () => {
             </DeleteButton>
           </MoodBoardTablet>
         </Wrapper>
-        <div>
-          <Link to="/uploadImage">Upload new image</Link>
-        </div>
       </Container>
     </BackgroundImage>
   );
@@ -179,12 +161,14 @@ const BackgroundImage = styled.main`
   text-align: center;
   padding-bottom: 20px;
 `;
+
+const StyledText = styled.h1`
+  margin-top: 0;
+`;
 const Container = styled.div`
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -243,23 +227,26 @@ const ImageButton = styled.button`
 const MoodBoardTablet = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
+  background-color: #dcdcdc80;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
 `;
 
 const MoodboardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-
   align-items: center;
   justify-content: center;
 `;
 const MoodboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
 `;
@@ -268,6 +255,8 @@ const ImageStyled = styled.img`
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 `;
 
 const DeleteButton = styled.button`

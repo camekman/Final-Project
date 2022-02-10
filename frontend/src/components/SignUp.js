@@ -142,7 +142,7 @@ const BackgroundImage = styled.main`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 110vh;
+  height: 120vh;
   object-fit: cover;
 `;
 
@@ -172,7 +172,7 @@ const LoginSection = styled.div`
   padding: 40px;
   margin: 20px;
   border-radius: 30px;
-  color: black;
+  color: rgb(77, 77, 77);
   font-size: 20px;
 `;
 const StyledFieldset = styled.fieldset`
@@ -204,7 +204,7 @@ const RadioButtonContainer = styled.div`
   padding: 15px;
   margin-top: 20px;
   border-radius: 10px;
-  color: black;
+  color: rgb(77, 77, 77);
   font-size: 16px;
   margin-right: 30px;
 `;
@@ -222,7 +222,7 @@ const SubmitButton = styled.button`
   margin-top: 20px;
   border: transparent;
   border-radius: 10px;
-  color: black;
+  color: rgb(77, 77, 77);
   font-family: "Righteous", cursive;
   font-size: 16px;
 `;

@@ -1,21 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaRecycle } from "react-icons/fa";
 import styled from "styled-components";
 
 const HomePage = () => {
+  const linkStyle = {
+    textDecoration: "none",
+    color: "whitesmoke",
+  };
+
   return (
     <BackgroundImage>
-      <Header>
-        <Logo>SUSTA</Logo>
-        {/* <Image> */}
-        <img src="../assets/recycle.png" alt="icon" />
-        {/* </Image> */}
-      </Header>
       <HomePageWrapper>
+        <Header>
+          <Logo>SUSTA</Logo>
+
+          <IconStyled>
+            <FaRecycle
+              style={{
+                height: 100,
+                width: 100,
+                color: "rgba(221, 133, 96, 1)",
+              }}
+            />
+          </IconStyled>
+          {/* <img src="../assets/recycle.png" alt="icon" /> */}
+        </Header>
+
         <HomePageContainer>
           <ContentContainer>
             <h3>
-              <Link style={{ color: "white" }} to="/SignUp">
+              <Link style={linkStyle} to="/SignUp">
                 Signup
               </Link>
             </h3>
@@ -23,7 +38,7 @@ const HomePage = () => {
 
           <ContentContainer>
             <h3>
-              <Link style={{ color: "white" }} to="/Login">
+              <Link style={linkStyle} to="/Login">
                 Login
               </Link>
             </h3>
@@ -59,15 +74,11 @@ const Header = styled.div`
   }
 `;
 
-const Image = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const HomePageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const Logo = styled.h3`
@@ -75,6 +86,13 @@ const Logo = styled.h3`
   margin-top: 135px;
   color: darkblue;
   margin-bottom: 0px;
+`;
+
+const IconStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 `;
 
 const HomePageContainer = styled.main`
@@ -95,9 +113,9 @@ const HomePageContainer = styled.main`
 const ContentContainer = styled.div`
   display: flex;
   border-radius: 20px;
-  background-color: rgba(221, 133, 96, 1);
+  background-color: rgba(221, 133, 96, 0.612);
   text-align: center;
-  color: white;
+  color: whitesmoke;
   align-items: center;
   justify-content: center;
   width: 35%;

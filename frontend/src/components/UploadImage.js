@@ -75,7 +75,7 @@ const UploadImage = () => {
           </>
         </ThemeProvider>
         <UploadContainer>
-          <h1>Upload your image</h1>
+          <StyledText>Upload your image</StyledText>
           <StyledForm onSubmit={handleFormSubmit}>
             <UploadSection>
               <input type="file" ref={fileInput} style={{ display: "none" }} />
@@ -91,13 +91,13 @@ const UploadImage = () => {
               <option value="sweatshirts">Sweatshirts</option>
               <option value="pants">Pants</option>
             </StyledSelect>
-            <p>{category}</p>
+
             <SubmitButton type="submit">Upload</SubmitButton>
           </StyledForm>
 
           <div>
             {uploadComplete && (
-              <img src={images[images.length - 1].imageUrl} alt="Upload" />
+              <Image src={images[images.length - 1].imageUrl} alt="Upload" />
             )}
           </div>
         </UploadContainer>
@@ -112,12 +112,17 @@ const BackgroundImage = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-image: url("./assets/beige.wardrobe.jpeg");
+  background-image: url("./assets/home.jpeg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 110vh;
+  height: 140vh;
   object-fit: cover;
+`;
+
+const StyledText = styled.h1`
+  font-size: 24px;
+  margin-top: 0;
 `;
 
 const UploadContainer = styled.div`
@@ -164,7 +169,7 @@ const UploadButton = styled.button`
   border-radius: 10px;
   color: whitesmoke;
   font-family: "Righteous", cursive;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const SubmitButton = styled.button`
@@ -177,4 +182,11 @@ const SubmitButton = styled.button`
   color: rgba(221, 133, 96, 1);
   font-family: "Righteous", cursive;
   font-size: 14px;
+`;
+
+const Image = styled.img`
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 15px;
 `;
