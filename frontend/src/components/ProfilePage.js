@@ -6,7 +6,6 @@ import { useOnClickOutside } from "./hooks";
 import GlobalStyles from "./global";
 
 import { theme } from "./theme";
-import user from "../reducers/user";
 
 import Magasin from "./Magasin";
 import HamburgerMenu from "./HamburgerMenu";
@@ -56,10 +55,6 @@ const ProfilePage = () => {
         }
       });
   }, [accessToken, userId, dispatch]);
-
-  const handleRestart = () => {
-    dispatch(user.actions.restart());
-  };
 
   //fetching the profile image
 
@@ -181,12 +176,8 @@ const ProfilePage = () => {
             </Link>
           </ContentWrapper>
         </ContentSection>
-
         <Magasin />
       </ProfileContainer>
-      <div>
-        <SignOutButton onClick={handleRestart}>Sign out</SignOutButton>
-      </div>
     </BackgroundImage>
   );
 };
@@ -194,7 +185,6 @@ const ProfilePage = () => {
 export default ProfilePage;
 
 const BackgroundImage = styled.main`
-  border: 3px solid red;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -207,7 +197,6 @@ const BackgroundImage = styled.main`
 `;
 
 const ProfileContainer = styled.div`
-  border: 3px solid green;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -304,16 +293,4 @@ const ContentWrapper = styled.div`
   justify-content: center;
   text-align: center;
   align-items: center;
-`;
-
-const SignOutButton = styled.button`
-  display: flex;
-  background-color: rgba(221, 133, 96, 1);
-  padding: 10px;
-  margin-top: 20px;
-  border: transparent;
-  border-radius: 10px;
-  color: whitesmoke;
-  font-family: "Righteous", cursive;
-  font-size: 14px;
 `;

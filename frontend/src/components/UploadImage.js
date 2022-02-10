@@ -1,11 +1,21 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+
+import styled, { ThemeProvider } from "styled-components";
+import { useOnClickOutside } from "./hooks";
+import GlobalStyles from "./global";
+import { theme } from "./theme";
+import HamburgerMenu from "./HamburgerMenu";
+import Menu from "./Menu";
+import FocusLock from "react-focus-lock";
 
 import image from "../reducers/image";
 
 const UploadImage = () => {
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
+
   const fileInput = useRef();
   const [uploadComplete, setUploadComplete] = useState(false);
   const [category, setCategory] = useState("");
@@ -44,9 +54,26 @@ const UploadImage = () => {
     setCategory(event.target.value);
   };
 
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
     <>
       <BackgroundImage>
+        <ThemeProvider theme={theme}>
+          <>
+            <GlobalStyles />
+            <div ref={node}>
+              <FocusLock disabled={!open}>
+                <HamburgerMenu
+                  open={open}
+                  setOpen={setOpen}
+                  aria-controls={menuId}
+                />
+                <Menu open={open} setOpen={setOpen} id={menuId} />
+              </FocusLock>
+            </div>
+          </>
+        </ThemeProvider>
         <UploadContainer>
           <h1>Upload your image</h1>
           <StyledForm onSubmit={handleFormSubmit}>
@@ -73,7 +100,6 @@ const UploadImage = () => {
               <img src={images[images.length - 1].imageUrl} alt="Upload" />
             )}
           </div>
-          <Link to="/MyWardrobe">Go To My Wardrobe</Link>
         </UploadContainer>
       </BackgroundImage>
     </>

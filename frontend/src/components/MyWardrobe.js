@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { useOnClickOutside } from "./hooks";
+import GlobalStyles from "./global";
+import { theme } from "./theme";
+import HamburgerMenu from "./HamburgerMenu";
+import Menu from "./Menu";
+import FocusLock from "react-focus-lock";
 import { API_URL } from "../utils/urls";
 import DeleteImage from "./DeleteImage";
-import styled from "styled-components";
 
 import image from "../reducers/image";
 
 const MyWardrobe = () => {
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
@@ -61,21 +70,34 @@ const MyWardrobe = () => {
     "sweatshirts",
     "pants",
   ];
+
   const onCategoryChange = (event) => {
     setCategory(event.target.value);
   };
 
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
     <Container>
       <BackgroundImage>
-        <div>
-          <h1>My Wardrobe </h1>
-          <Link to="/MyWardrobe">MyWardrobe</Link>
+        <ThemeProvider theme={theme}>
+          <>
+            <GlobalStyles />
+            <div ref={node}>
+              <FocusLock disabled={!open}>
+                <HamburgerMenu
+                  open={open}
+                  setOpen={setOpen}
+                  aria-controls={menuId}
+                />
+                <Menu open={open} setOpen={setOpen} id={menuId} />
+              </FocusLock>
+            </div>
+          </>
+        </ThemeProvider>
 
-          <Link to="/Moodboard">Moodboard</Link>
+        <TextHeader>My Wardrobe </TextHeader>
 
-          <Link to="/profile">ProfilePage</Link>
-        </div>
         <ButtonContainer>
           {buttonCategory.map((category) => (
             <StyledButton
@@ -124,10 +146,13 @@ const BackgroundImage = styled.main`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 110vh;
+  height: 120vh;
   object-fit: cover;
 `;
 
+const TextHeader = styled.h1`
+  padding-top: 15px;
+`;
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;

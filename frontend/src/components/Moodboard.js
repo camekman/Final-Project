@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import image from "../reducers/image";
 import DeleteImage from "./DeleteImage";
+import { useOnClickOutside } from "./hooks";
+import GlobalStyles from "./global";
+import { theme } from "./theme";
+import HamburgerMenu from "./HamburgerMenu";
+import Menu from "./Menu";
+import FocusLock from "react-focus-lock";
 
 const MyWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const userId = useSelector((store) => store.user.userId);
   const images = useSelector((store) => store.image.images);
+
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  const menuId = "main-menu";
 
   console.log(images);
 
@@ -76,15 +86,32 @@ const MyWardrobe = () => {
     SetSelectOneImage();
   };
 
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
-    <>
+    <BackgroundImage>
       <Container>
+        <ThemeProvider theme={theme}>
+          <>
+            <GlobalStyles />
+            <div ref={node}>
+              <FocusLock disabled={!open}>
+                <HamburgerMenu
+                  open={open}
+                  setOpen={setOpen}
+                  aria-controls={menuId}
+                />
+                <Menu open={open} setOpen={setOpen} id={menuId} />
+              </FocusLock>
+            </div>
+          </>
+        </ThemeProvider>
         <h1>MOODBOARD</h1>
-        <div>
+        {/* <div>
           <Link to="/MyWardrobe">MyWardrobe</Link>
           <Link to="/Moodboard">Moodboard</Link>
           <Link to="/profile">ProfilePage</Link>
-        </div>
+        </div> */}
         <Wrapper>
           <ImageContainer>
             <ButtonContainer>
@@ -132,17 +159,32 @@ const MyWardrobe = () => {
           <Link to="/uploadImage">Upload new image</Link>
         </div>
       </Container>
-    </>
+    </BackgroundImage>
   );
 };
 
 export default MyWardrobe;
 
+const BackgroundImage = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 130vh;
+  background-image: url("./assets/background.image.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 20px;
+`;
 const Container = styled.div`
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  border: 3px solid black;
+
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -151,7 +193,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: 2px solid blue;
+
   align-items: center;
   justify-content: center;
 `;
@@ -159,7 +201,7 @@ const ImageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  border: 1px solid green;
+
   justify-content: center;
   align-items: center;
 `;
@@ -195,12 +237,13 @@ const ImageButton = styled.button`
   display: flex;
   border: transparent;
   border-radius: 10px;
+  background-color: transparent;
 `;
 
 const MoodBoardTablet = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid green;
+
   align-items: center;
   justify-content: center;
 `;
@@ -209,14 +252,14 @@ const MoodboardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  border: 1px solid red;
+
   align-items: center;
   justify-content: center;
 `;
 const MoodboardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid green;
+
   align-items: center;
   justify-content: center;
 `;
