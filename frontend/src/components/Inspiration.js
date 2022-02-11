@@ -1,51 +1,53 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
-import { API_URL } from "../utils/urls";
-// import user from "../reducers/user";
+// THIS IS GOING TO BE THE INSPIRATION SITE
 
-const Inspiration = () => {
-  const accessToken = useSelector((store) => store.user.accessToken);
+// import React, { useEffect } from "react";
+// import { useSelector } from "react-redux";
+// import { useNavigate, Link } from "react-router-dom";
+// import { API_URL } from "../utils/urls";
+// // import user from "../reducers/user";
 
-  const navigate = useNavigate();
+// const Inspiration = () => {
+//   const accessToken = useSelector((store) => store.user.accessToken);
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/login");
-    }
-  }, [accessToken, navigate]);
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        Authorization: accessToken,
-      },
-    };
+//   const navigate = useNavigate();
 
-    fetch(API_URL, options)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-      });
-  }, [accessToken]);
+//   useEffect(() => {
+//     if (!accessToken) {
+//       navigate("/login");
+//     }
+//   }, [accessToken, navigate]);
+//   useEffect(() => {
+//     const options = {
+//       method: "GET",
+//       headers: {
+//         Authorization: accessToken,
+//       },
+//     };
 
-  return (
-    <>
-      <div>
-        <p>Here you can store your inspirations pic</p>
-        <Link to="/MyWardrobe">MyWardrobe</Link>
-        <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
-        <Link to="/Moodboard">Moodboard</Link>
-        <Link to="/Inspiration">Inspiration</Link>
-        <Link to="/profile">ProfilePage</Link>
-      </div>
+//     fetch(API_URL, options)
+//       .then((res) => res.json())
+//       .then((json) => {
+//         console.log(json);
+//       });
+//   }, [accessToken]);
 
-      <div>
-        {" "}
-        <Link to="/uploadImage">Upload new image</Link>
-      </div>
-    </>
-  );
-};
+//   return (
+//     <>
+//       <div>
+//         <p>Here you can store your inspirations pic</p>
+//         <Link to="/MyWardrobe">MyWardrobe</Link>
+//         <Link to="/MyFleeMarketWardrobe">MyFleeMarketWardrobe</Link>
+//         <Link to="/Moodboard">Moodboard</Link>
+//         <Link to="/Inspiration">Inspiration</Link>
+//         <Link to="/profile">ProfilePage</Link>
+//       </div>
 
-export default Inspiration;
+//       <div>
+//         {" "}
+//         <Link to="/uploadImage">Upload new image</Link>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Inspiration;

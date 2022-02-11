@@ -56,8 +56,6 @@ const ProfilePage = () => {
       });
   }, [accessToken, userId, dispatch]);
 
-  //fetching the profile image
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -106,15 +104,7 @@ const ProfilePage = () => {
           </ThemeProvider>
 
           <ProfilePictureSection>
-            <ProfileImage
-              // style={{
-              //   width: "150px",
-              //   height: "150px",
-              //   borderRadius: "50%",
-              // }}
-              src={profileImage}
-              alt="ProfilePicture"
-            />
+            <ProfileImage src={profileImage} alt="ProfilePicture" />
             <UploadImageSection>
               <form onSubmit={handleFormSubmit}>
                 <input

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { useOnClickOutside } from "./hooks";
 import GlobalStyles from "./global";
@@ -27,10 +27,6 @@ const MyWardrobe = () => {
   const navigate = useNavigate();
 
   const categoryClothes = images.filter((item) => item.category === category);
-  console.log(categoryClothes);
-
-  console.log(categoryClothes);
-  console.log(category);
 
   useEffect(() => {
     if (!accessToken) {

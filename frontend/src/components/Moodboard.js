@@ -128,7 +128,7 @@ const MyWardrobe = () => {
           </ImageContainer>
 
           <MoodBoardTablet>
-            This is your mood-tablet onSelect
+            This is your selected mood-tablet
             <MoodboardContainer>
               {selectedImages.map(({ id, imageUrl }) => (
                 <MoodboardWrapper key={id}>

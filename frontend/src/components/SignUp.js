@@ -6,7 +6,6 @@ import { FaHouseUser } from "react-icons/fa";
 import styled from "styled-components";
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
-// import ui from "../reducers/ui";
 
 const Signup = () => {
   const [name, setName] = useState("");

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../utils/urls";
-// import user from "../reducers/user";
 
 const MyFleeMarketWardrobe = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -24,9 +23,7 @@ const MyFleeMarketWardrobe = () => {
 
     fetch(API_URL, options)
       .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-      });
+      .then((json) => {});
   }, [accessToken]);
 
   return (
