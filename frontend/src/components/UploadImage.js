@@ -22,7 +22,8 @@ const UploadImage = () => {
 
   const images = useSelector((store) => store.image.images);
   const userId = useSelector((store) => store.user.userId);
-  const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
+  // const UPLOAD_URL = `http://localhost:8080/upload/${userId}`;
+  const UPLOAD_URL = `https://susta-wardrobe.herokuapp.com/upload/${userId}`;
 
   const dispatch = useDispatch();
 

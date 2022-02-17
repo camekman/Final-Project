@@ -13,7 +13,8 @@ const DeleteImage = ({ imageId }) => {
 
   const [imageDelete, setImageDelete] = useState("");
 
-  const DELETE_URL = `http://localhost:8080/delete/${imageId}`;
+  // const DELETE_URL = `http://localhost:8080/delete/${imageId}`;
+  const DELETE_URL = `https://susta-wardrobe.herokuapp.com/delete/${imageId}`;
 
   const onDeleteImage = (event) => {
     const options = {

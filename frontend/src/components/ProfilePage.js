@@ -27,7 +27,8 @@ const ProfilePage = () => {
   const name = useSelector((store) => store.user.name);
   const username = useSelector((store) => store.user.username);
 
-  const UPLOAD_URL = `http://localhost:8080/profile/${userId}`;
+  // const UPLOAD_URL = `http://localhost:8080/profile/${userId}`;
+  const UPLOAD_URL = `https://susta-wardrobe.herokuapp.com/${userId}`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
