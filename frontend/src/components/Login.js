@@ -25,7 +25,7 @@ const Login = () => {
     if (accessToken) {
       navigate("/profile");
     }
-  }, [accessToken, navigate]);
+  }, [accessToken, navigate, setName, setEmail]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();

@@ -7,22 +7,13 @@ import image from "../reducers/image";
 
 const DeleteImage = ({ imageId }) => {
   const accessToken = useSelector((store) => store.user.accessToken);
-  const userId = useSelector((store) => store.user.userId);
 
   const dispatch = useDispatch();
-  const deleteImage = useSelector((store) => store.image.deleteImage);
+  // const deleteImage = useSelector((store) => store.image.deleteImage);
 
   const [imageDelete, setImageDelete] = useState("");
 
   const DELETE_URL = `http://localhost:8080/delete/${imageId}`;
-
-  let selectedDelete = useSelector((store) =>
-    store.image.images.filter((item) => item.deleteImage)
-  );
-
-  const categoryImage = selectedDelete.filter(
-    (item) => item.deleteImage === deleteImage
-  );
 
   const onDeleteImage = (event) => {
     const options = {

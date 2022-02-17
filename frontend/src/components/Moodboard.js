@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/urls";
 import styled, { ThemeProvider } from "styled-components";
 import image from "../reducers/image";
