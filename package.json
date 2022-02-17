@@ -2,7 +2,7 @@
   "name": "place-name-of-your-project-here",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "npm-install --prefix backend"
+    "postinstall": "npm install --prefix backend"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11"
