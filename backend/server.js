@@ -12,7 +12,7 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 dotenv.config();
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/authAPI";
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/susta-wardrobe";
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
