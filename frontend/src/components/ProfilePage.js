@@ -28,7 +28,7 @@ const ProfilePage = () => {
   const username = useSelector((store) => store.user.username);
 
   // const UPLOAD_URL = `http://localhost:8080/profile/${userId}`;
-  const UPLOAD_URL = `https://susta-wardrobe.herokuapp.com/${userId}`;
+  // const UPLOAD_URL = `https://susta-wardrobe.herokuapp.com/${userId}`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ const ProfilePage = () => {
       body: formData,
     };
 
-    fetch(UPLOAD_URL, options)
+    fetch(API_URL(`profile/${userId}`), options)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
